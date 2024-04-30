@@ -1,7 +1,5 @@
 package com.github.qualquercoisavinteconto.models;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,18 +10,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "products")
+@Table(name = "addresses")
 @Getter
 @Setter
-public class Product 
-{
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; 
 
     @Column
-    private String name;   
+    private String street;
+    
+    @Column
+    private String number;
 
     @Column
-    private double price;
+    private String state; 
+    
+    @Column
+    private Long userId;    
 }

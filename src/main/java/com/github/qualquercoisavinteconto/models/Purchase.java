@@ -12,18 +12,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "products")
+@Table(name = "purchases")
 @Getter
 @Setter
-public class Product 
-{
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; 
 
     @Column
-    private String name;   
-
+    private Long userId;
+    
     @Column
     private double price;
+
+    @Column
+    private int status;
+    
+    @Column
+    private LocalDateTime createdAt;    
 }
