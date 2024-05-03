@@ -29,6 +29,9 @@ public class Address {
     private String number;
 
     @Column
+    private String city;
+
+    @Column
     private String state; 
 
     @ManyToOne
