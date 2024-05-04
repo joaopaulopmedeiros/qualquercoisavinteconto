@@ -1,10 +1,17 @@
 package com.github.qualquercoisavinteconto.responses;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class LoginResponse 
 {
     private String accessToken;
-    private String expiresIn;
 }
