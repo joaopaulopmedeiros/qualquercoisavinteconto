@@ -1,18 +1,18 @@
-package com.github.qualquercoisavinteconto.factories;
+package com.github.qualquercoisavinteconto.exceptions.factories;
 
 import java.util.List;
 
 import com.github.qualquercoisavinteconto.responses.ApiError;
-import com.github.qualquercoisavinteconto.responses.ValidationFailedResponse;
+import com.github.qualquercoisavinteconto.responses.ApiErrorResponse;
 
-public class BadRequestFactory {
-    public static ValidationFailedResponse createValidationFailedResponse(String code, String message) {
+public class ApiErrorResponseFactory {
+    public static ApiErrorResponse createValidationFailedResponse(String code, String message) {
         var error = ApiError.builder()
                 .code(code)
                 .message(message)
                 .build();
 
-        return ValidationFailedResponse
+        return ApiErrorResponse
                 .builder()
                 .errors(List.of(error))
                 .build();

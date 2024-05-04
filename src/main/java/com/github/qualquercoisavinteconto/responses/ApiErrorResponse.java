@@ -7,6 +7,6 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ValidationFailedResponse {
+public class ApiErrorResponse {
     private List<ApiError> errors;
 }
