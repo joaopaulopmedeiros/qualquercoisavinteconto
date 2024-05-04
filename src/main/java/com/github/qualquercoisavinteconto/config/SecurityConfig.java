@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signup").permitAll()
+                        .requestMatchers("categories").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
