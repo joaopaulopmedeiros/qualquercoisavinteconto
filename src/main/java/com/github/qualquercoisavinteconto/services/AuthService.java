@@ -1,8 +1,11 @@
 package com.github.qualquercoisavinteconto.services;
 
-import com.github.qualquercoisavinteconto.requests.LoginRequest;
-import com.github.qualquercoisavinteconto.responses.LoginResponse;
+import com.github.qualquercoisavinteconto.requests.SigninRequest;
+import com.github.qualquercoisavinteconto.requests.SignupRequest;
+import com.github.qualquercoisavinteconto.responses.SigninResponse;
+import com.github.qualquercoisavinteconto.responses.SignupResponse;
 
 public interface AuthService {
-    LoginResponse login(LoginRequest request);
+    SigninResponse signin(SigninRequest request);
+    SignupResponse signup(SignupRequest request);
 }

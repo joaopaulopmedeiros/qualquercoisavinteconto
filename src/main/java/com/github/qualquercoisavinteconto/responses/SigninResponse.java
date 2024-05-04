@@ -11,6 +11,6 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class LoginResponse {
+public class SigninResponse {
     private String accessToken;
 }
