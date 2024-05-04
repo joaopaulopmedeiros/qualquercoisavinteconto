@@ -20,7 +20,7 @@ import com.github.qualquercoisavinteconto.services.impl.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurations {
+public class SecurityConfig {
     @Autowired
     SecurityFilter securityFilter;
 
