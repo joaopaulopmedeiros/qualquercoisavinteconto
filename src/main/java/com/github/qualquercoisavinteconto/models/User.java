@@ -64,12 +64,8 @@ public class User implements UserDetails
     private List<Purchase> purchases;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() 
-    {
-        return roles
-            .stream()
-            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
-            .collect(Collectors.toList());
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
