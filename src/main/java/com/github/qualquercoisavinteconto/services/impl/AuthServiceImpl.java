@@ -37,15 +37,11 @@ public class AuthServiceImpl implements AuthService {
 
         @Override
         public SigninResponse signin(SigninRequest request) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                                request.getEmail(), request.getPassword());
+                var usernamePassword = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 
-                Authentication authentication = this.authManager
-                                .authenticate(usernamePasswordAuthenticationToken);
+                var auth = this.authManager.authenticate(usernamePassword);
 
-                var user = (User) authentication.getPrincipal();
-
-                String token = tokenService.createToken(user);
+                var token = tokenService.createToken((User) auth.getPrincipal());
 
                 return SigninResponse.builder()
                                 .accessToken(token)
