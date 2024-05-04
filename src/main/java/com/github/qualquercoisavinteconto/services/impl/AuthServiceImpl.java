@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.exceptions.UserAlreadyExistsException;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.UserRepository;
 import com.github.qualquercoisavinteconto.requests.SigninRequest;
@@ -45,11 +46,10 @@ public class AuthServiceImpl implements AuthService {
         }
 
         @Override
-        public SignupResponse signup(SignupRequest request) {
+        public SignupResponse signup(SignupRequest request) throws UserAlreadyExistsException {
                 Optional<User> user = this.userRepository.findByEmail(request.getEmail());
 
-                if (user.isPresent())
-                        throw new RuntimeException("User already exists");
+                if (user.isPresent()) throw new UserAlreadyExistsException();
 
                 String encryptedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
 

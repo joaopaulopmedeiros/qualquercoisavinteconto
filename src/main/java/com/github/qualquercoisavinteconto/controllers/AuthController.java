@@ -1,9 +1,11 @@
 package com.github.qualquercoisavinteconto.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qualquercoisavinteconto.exceptions.UserAlreadyExistsException;
 import com.github.qualquercoisavinteconto.requests.SigninRequest;
 import com.github.qualquercoisavinteconto.requests.SignupRequest;
 import com.github.qualquercoisavinteconto.responses.SigninResponse;
@@ -24,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public SignupResponse signup(@RequestBody SignupRequest request) {
-        return this.service.signup(request);
+    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest request) throws UserAlreadyExistsException {
+        return ResponseEntity.ok(this.service.signup(request));
     }
 }
