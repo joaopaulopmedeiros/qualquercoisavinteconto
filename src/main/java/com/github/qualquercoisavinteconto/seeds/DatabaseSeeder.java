@@ -35,7 +35,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (this.userRepository.count() == 0) {
             String encryptedPassword = new BCryptPasswordEncoder().encode("123456");
             User user = new User("Admin Tester", "tester@admin.com", encryptedPassword);
-            Role role = roleRepository.getReferenceById(1L);
+            Role role = roleRepository.findById(1L).orElseThrow();
             user.setRoles(List.of(role));
             this.userRepository.save(user);
         }
