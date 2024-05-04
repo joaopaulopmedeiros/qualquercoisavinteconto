@@ -1,5 +1,6 @@
 package com.github.qualquercoisavinteconto.services.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         public void attachRolesByIds(User user, List<UserRoles> roleIds) {
-                List<Role> roles = List.of();
+                List<Role> roles = new ArrayList<>();
 
                 for (var roleId : roleIds) {
                         Role role = roleRepository.findById(roleId.getValue())
