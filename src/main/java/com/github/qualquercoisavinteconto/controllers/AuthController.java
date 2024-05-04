@@ -9,18 +9,15 @@ import com.github.qualquercoisavinteconto.responses.LoginResponse;
 import com.github.qualquercoisavinteconto.services.AuthService;
 
 @RestController
-public class AuthController 
-{
+public class AuthController {
     private final AuthService service;
 
-    public AuthController(AuthService service)
-    {
+    public AuthController(AuthService service) {
         this.service = service;
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) 
-    {
+    public LoginResponse login(@RequestBody LoginRequest request) {
         return this.service.login(request);
     }
 }
