@@ -8,6 +8,35 @@
 	"item": [
 		{
 			"name": "signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();",
+							"",
+							"if (responseBody?.accessToken) {",
+							"    var accessToken = responseBody.accessToken;",
+							"    pm.environment.set(\"access_token\", accessToken);",
+							"} else {",
+							"    console.log(\"Response body is null.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
