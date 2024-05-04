@@ -1,5 +1,7 @@
 package com.github.qualquercoisavinteconto.services.impl;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,8 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.enums.UserRoles;
 import com.github.qualquercoisavinteconto.exceptions.UserAlreadyExistsException;
+import com.github.qualquercoisavinteconto.models.Role;
 import com.github.qualquercoisavinteconto.models.User;
+import com.github.qualquercoisavinteconto.repositories.RoleRepository;
 import com.github.qualquercoisavinteconto.repositories.UserRepository;
 import com.github.qualquercoisavinteconto.requests.SigninRequest;
 import com.github.qualquercoisavinteconto.requests.SignupRequest;
@@ -22,19 +27,23 @@ public class AuthServiceImpl implements AuthService {
         private final AuthenticationManager authManager;
         private final TokenService tokenService;
         private final UserRepository userRepository;
+        private final RoleRepository roleRepository;
 
         public AuthServiceImpl(
                         AuthenticationManager authManager,
                         TokenService tokenService,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        RoleRepository roleRepository) {
                 this.authManager = authManager;
                 this.tokenService = tokenService;
                 this.userRepository = userRepository;
+                this.roleRepository = roleRepository;
         }
 
         @Override
         public SigninResponse signin(SigninRequest request) {
-                var usernamePassword = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+                var usernamePassword = new UsernamePasswordAuthenticationToken(request.getEmail(),
+                                request.getPassword());
 
                 var auth = this.authManager.authenticate(usernamePassword);
 
@@ -49,11 +58,14 @@ public class AuthServiceImpl implements AuthService {
         public SignupResponse signup(SignupRequest request) throws UserAlreadyExistsException {
                 Optional<User> user = this.userRepository.findByEmail(request.getEmail());
 
-                if (user.isPresent()) throw new UserAlreadyExistsException();
+                if (user.isPresent())
+                        throw new UserAlreadyExistsException();
 
                 String encryptedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
 
                 User newUser = new User(request.getName(), request.getEmail(), encryptedPassword);
+
+                this.attachRolesByIds(newUser, List.of(UserRoles.CUSTOMER));
 
                 this.userRepository.save(newUser);
 
@@ -62,5 +74,17 @@ public class AuthServiceImpl implements AuthService {
                 response.setId(newUser.getId());
 
                 return response;
+        }
+
+        public void attachRolesByIds(User user, List<UserRoles> roleIds) {
+                List<Role> roles = List.of();
+
+                for (var roleId : roleIds) {
+                        Role role = roleRepository.findById(roleId.getValue())
+                                        .orElseThrow(() -> new RuntimeException("Role not found: " + roleId));
+                        roles.add(role);
+                }
+
+                user.setRoles(roles);
         }
 }
