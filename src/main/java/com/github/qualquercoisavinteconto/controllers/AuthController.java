@@ -21,8 +21,8 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public SigninResponse signin(@RequestBody SigninRequest request) {
-        return this.service.signin(request);
+    public ResponseEntity<SigninResponse> signin(@RequestBody SigninRequest request) {
+        return ResponseEntity.ok(this.service.signin(request));
     }
 
     @PostMapping("/signup")
