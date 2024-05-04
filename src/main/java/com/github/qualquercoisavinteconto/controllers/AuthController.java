@@ -12,7 +12,10 @@ import com.github.qualquercoisavinteconto.responses.SigninResponse;
 import com.github.qualquercoisavinteconto.responses.SignupResponse;
 import com.github.qualquercoisavinteconto.services.AuthService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Auth")
 public class AuthController {
     private final AuthService service;
 
