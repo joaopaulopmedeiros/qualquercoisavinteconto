@@ -3,8 +3,12 @@ package com.github.qualquercoisavinteconto.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.github.qualquercoisavinteconto.enums.PurchaseStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,10 +29,11 @@ public class Purchase {
     private Long id; 
     
     @Column
-    private double price;
+    private double total;
 
     @Column
-    private int status;
+    @Enumerated(EnumType.STRING)
+    private PurchaseStatus status;
     
     @Column
     private LocalDateTime createdAt;
