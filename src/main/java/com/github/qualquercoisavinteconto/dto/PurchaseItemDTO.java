@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseItemDTO {
 
+  private Long Purchase_id;
   private Long product_id;
   private Integer quantity;
   

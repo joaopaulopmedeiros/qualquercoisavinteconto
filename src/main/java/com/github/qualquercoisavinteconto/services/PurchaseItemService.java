@@ -9,11 +9,12 @@ import com.github.qualquercoisavinteconto.models.PurchaseItem;
 
 public interface PurchaseItemService {
   
-  // void save( PurchaseItemDTO purchaseItemDTO );
+  void save( PurchaseItemDTO purchaseItemDTO );
   void delete( Long id );
+  void update( PurchaseItemDTO purchaseItemDTO, Long id);
   void deleteAllByPurchaseId( Long purchaseId );
   List<PurchaseItem> findItemsByPurchase( Purchase purchase );
-  List<PurchaseItem> findItemsByProductId( Long productId );
+  //List<PurchaseItem> findItemsByProductId( Long productId );
   List<PurchaseItem> findItemsByPurchaseId( Long purchaseId );
   Optional<PurchaseItem> findById( Long id );
 

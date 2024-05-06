@@ -12,9 +12,13 @@ import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
 import com.github.qualquercoisavinteconto.responses.ProductSearchResponse;
 
 @Service
-public class ProductService 
-{
+public class ProductService {
+
     private final ProductRepository repository;
+
+    public Product findById(Long id){
+        return repository.findById(id).orElse(null);
+    }
 
     public ProductService(ProductRepository repository)
     {

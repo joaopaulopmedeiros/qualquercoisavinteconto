@@ -47,7 +47,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     purchase.setStatus(PurchaseStatus.valueOf(purchaseDTO.getStatus()));
     purchase.setCreatedAt(LocalDateTime.now());
 
-    purchase = purchaseRepository.save(purchase);
+    purchaseRepository.save(purchase);
 
     List<PurchaseItem> purchaseItems = purchaseDTO.getItems().stream()
       .map(item -> {

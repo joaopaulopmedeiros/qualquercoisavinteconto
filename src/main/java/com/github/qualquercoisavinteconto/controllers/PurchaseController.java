@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "PucharseItem")
-@RequestMapping("pucharseitem")
-public class PucharseItemController {
+@Tag(name = "Purchase")
+@RequestMapping("purchase")
+public class PurchaseController {
     
 }
