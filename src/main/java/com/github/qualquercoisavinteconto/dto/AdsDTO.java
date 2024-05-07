@@ -22,6 +22,6 @@ import jakarta.persistence.Column;
 public class AdsDTO {
     
     private String description;
-    private Product product;
+    private Long product_id;
     
 }
