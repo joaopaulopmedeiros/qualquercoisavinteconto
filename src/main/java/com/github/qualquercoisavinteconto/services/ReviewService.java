@@ -10,8 +10,8 @@ public interface ReviewService {
   Review save(ReviewDTO reviewDTO);
   Review findById(Long id);
   List<Review> findAll();
-  Review findByProductId(Long id);
-  Review findByUserId(Long id);
+  List<Review> findByProductId(Long id);
+  List<Review> findByUserId(Long id);
   void delete(Long id);
 
 }

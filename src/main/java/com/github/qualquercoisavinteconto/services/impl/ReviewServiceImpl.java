@@ -46,13 +46,13 @@ public class ReviewServiceImpl implements ReviewService{
   }
 
   @Override
-  public Review findByProductId(Long id) {
-    return reviewRepository.findByProduct_id(id).orElseThrow(() -> new RuntimeException("Review not found"));
+  public List<Review> findByProductId(Long id) {
+    return reviewRepository.findByProduct_id(id);
   }
 
   @Override
-  public Review findByUserId(Long id) {
-    return reviewRepository.findByUser_id(id).orElseThrow(() -> new RuntimeException("Review not found"));
+  public List<Review> findByUserId(Long id) {
+    return reviewRepository.findByUser_id(id);
   }
 
   @Override
