@@ -41,7 +41,7 @@ public class AdsServiceImpl implements AdsService{
 
   @Override
   public Ads findByProductId(Long id) {
-    return adsRepository.findByProduct(id).orElseThrow(() -> new RuntimeException("Ads not found"));
+    return adsRepository.findByProduct_id(id).orElseThrow(() -> new RuntimeException("Ads not found"));
   }
 
   @Override

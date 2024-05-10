@@ -8,5 +8,5 @@ import com.github.qualquercoisavinteconto.models.Ads;
 
 public interface AdsRepository extends JpaRepository<Ads, Long> 
 {    
-    Optional<Ads> findByProduct(Long id);
+    Optional<Ads> findByProduct_id(Long id);
 }
