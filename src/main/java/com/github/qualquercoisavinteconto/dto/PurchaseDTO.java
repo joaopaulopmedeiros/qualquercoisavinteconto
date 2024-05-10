@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/* PurchaseDTO
+/* Body da requisição:
 {
   "user_id": 1,
   "status": "approved",

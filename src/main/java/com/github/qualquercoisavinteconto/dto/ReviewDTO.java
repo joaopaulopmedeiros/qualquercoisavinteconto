@@ -6,18 +6,21 @@ import lombok.NoArgsConstructor;
 
 /* Body da requisição:
 {
+  "description": "Muito bom",
+  "stars": 5,
   "product_id": 1,
-  "quantity": 2
+  "user_id": 1
 }
-*/
+ */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseItemDTO {
-
-  private Long Purchase_id;
-  private Long product_id;
-  private Integer quantity;
+public class ReviewDTO {
   
+  private String description;
+  private Integer stars;
+  private Long product_id;
+  private Long user_id;
+
 }

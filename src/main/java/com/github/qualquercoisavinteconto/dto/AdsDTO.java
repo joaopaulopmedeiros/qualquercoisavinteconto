@@ -15,6 +15,13 @@ import com.github.qualquercoisavinteconto.models.Role;
 
 import jakarta.persistence.Column;
 
+/* Body da requisição:
+{
+  "description": "Anúncio de teste",
+  "product_id": 1
+}
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
