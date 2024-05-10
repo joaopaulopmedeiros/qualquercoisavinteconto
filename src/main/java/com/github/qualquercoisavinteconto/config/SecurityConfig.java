@@ -34,6 +34,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signup").permitAll()
                         .requestMatchers("categories").hasRole("ADMIN")
+                        .requestMatchers("products").hasRole("SELLER")
+                        .requestMatchers("address").hasRole("CUSTOMER")
+                        .requestMatchers("ads").hasRole("ADVERTISER")
+                        .requestMatchers("purchase").hasRole("CUSTOMER")
+                        .requestMatchers("purchaseitem").hasRole("CUSTOMER")
+                        .requestMatchers("review").hasRole("CUSTOMER")
+                        .requestMatchers("roles").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
