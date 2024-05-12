@@ -9,7 +9,8 @@ public interface AddressService {
 
     Address save(Address address);
     Address findById(Long id);
-    List<Address> finAddressesByUser(User user);
+    List<Address> findAddressesByUser(User user);
+    void delete(Long id);
 
 } 
 

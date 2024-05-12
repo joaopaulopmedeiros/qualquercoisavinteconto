@@ -33,9 +33,15 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<Address> finAddressesByUser(User user)
+    public List<Address> findAddressesByUser(User user)
     {
         return addressRepository.findByUser(user);
+    }
+
+    @Override
+    public void delete(Long id)
+    {
+        addressRepository.deleteById(id);
     }
     
 }
