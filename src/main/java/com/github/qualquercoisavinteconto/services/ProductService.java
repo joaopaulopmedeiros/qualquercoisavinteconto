@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.dto.ProductDTO;
 import com.github.qualquercoisavinteconto.mappers.ProductMapper;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.repositories.ProductRepository;
@@ -31,5 +32,22 @@ public class ProductService {
         return products.stream()
             .map(ProductMapper::mapToSearchResponse)
             .collect(Collectors.toList());
+    }
+
+    public Product save(ProductDTO product) {
+        Product newProduct = new Product();
+        newProduct.setName(product.getName());
+        newProduct.setPrice(product.getPrice());
+        return repository.save(newProduct);
+    }
+
+    public void update(Long id, ProductDTO productDTO) {
+        Product product = repository.findById(id).orElseThrow();
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
