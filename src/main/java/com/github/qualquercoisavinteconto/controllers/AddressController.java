@@ -53,31 +53,73 @@ public class AddressController {
         return addressService.save(address);
     }
 
+    // @GetMapping("{id}")
+    // public Address getAddressById(@PathVariable Long id) {
+    //     return addressService.findById(id);
+    // }
+
     @GetMapping("{id}")
-    public Address getAddressById(@PathVariable Long id) {
-        return addressService.findById(id);
+    public ResponseEntity<?> getAddressById(@PathVariable Long id) {
+        Address address = addressService.findById(id);
+        if(address == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+        }
+        return ResponseEntity.ok(address);
     }
+
+    // @GetMapping("/user/{id}")
+    // public List<Address> getAddressByUser(@PathVariable Long id) {
+    //     return addressService.findAddressesByUser(userService.findById(id));
+    // }
 
     @GetMapping("/user/{id}")
-    public List<Address> getAddressByUser(@PathVariable Long id) {
-        return addressService.findAddressesByUser(userService.findById(id));
+    public ResponseEntity<?> getAddressByUser(@PathVariable Long id) {
+        List<Address> addresses = addressService.findAddressesByUser(userService.findById(id));
+        if(addresses.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+        }
+        return ResponseEntity.ok(addresses);
     }
+
+    // @DeleteMapping("{id}")
+    // @ResponseStatus(HttpStatus.NO_CONTENT)
+    // public void deleteAddress(@PathVariable Long id) {
+    //     addressService.delete(id);
+    // }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAddress(@PathVariable Long id) {
+    public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
+        Address address = addressService.findById(id);
+        if(address == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+        }
         addressService.delete(id);
+        return ResponseEntity.ok("Address deleted");
     }
 
+    // @PutMapping("{id}")
+    // public Address updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+    //     Address address = addressService.findById(id);
+    //     address.setCity(addressDTO.getCity());
+    //     address.setNumber(addressDTO.getNumber());
+    //     address.setState(addressDTO.getState());
+    //     address.setStreet(addressDTO.getStreet());
+    //     address.setUser(userService.findById(addressDTO.getUser_id()));
+    //     return addressService.save(address);
+    // }
+
     @PutMapping("{id}")
-    public Address updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<?> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
         Address address = addressService.findById(id);
+        if(address == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+        }
         address.setCity(addressDTO.getCity());
         address.setNumber(addressDTO.getNumber());
         address.setState(addressDTO.getState());
         address.setStreet(addressDTO.getStreet());
         address.setUser(userService.findById(addressDTO.getUser_id()));
-        return addressService.save(address);
+        return ResponseEntity.ok(addressService.save(address));
     }
     
 }

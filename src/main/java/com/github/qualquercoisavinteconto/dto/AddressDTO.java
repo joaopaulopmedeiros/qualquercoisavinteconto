@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
   "street": "Rua de teste",
   "number": "123",
   "state": "SP",
-  "city": "São Paulo",
+  "city": "São Paulo"
 }
  */
 
