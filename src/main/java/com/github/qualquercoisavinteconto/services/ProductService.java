@@ -34,17 +34,15 @@ public class ProductService {
             .collect(Collectors.toList());
     }
 
-    public Product save(ProductDTO product) {
-        Product newProduct = new Product();
-        newProduct.setName(product.getName());
-        newProduct.setPrice(product.getPrice());
-        return repository.save(newProduct);
+    public Product save(Product product) {
+        return repository.save(product);
     }
 
     public void update(Long id, ProductDTO productDTO) {
         Product product = repository.findById(id).orElseThrow();
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
+        repository.save(product);
     }
 
     public void delete(Long id) {
