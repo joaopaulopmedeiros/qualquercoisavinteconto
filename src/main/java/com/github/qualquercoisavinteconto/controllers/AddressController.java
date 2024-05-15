@@ -53,11 +53,6 @@ public class AddressController {
         return addressService.save(address);
     }
 
-    // @GetMapping("{id}")
-    // public Address getAddressById(@PathVariable Long id) {
-    //     return addressService.findById(id);
-    // }
-
     @GetMapping("{id}")
     public ResponseEntity<?> getAddressById(@PathVariable Long id) {
         Address address = addressService.findById(id);
@@ -66,11 +61,6 @@ public class AddressController {
         }
         return ResponseEntity.ok(address);
     }
-
-    // @GetMapping("/user/{id}")
-    // public List<Address> getAddressByUser(@PathVariable Long id) {
-    //     return addressService.findAddressesByUser(userService.findById(id));
-    // }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<?> getAddressByUser(@PathVariable Long id) {
@@ -81,12 +71,6 @@ public class AddressController {
         return ResponseEntity.ok(addresses);
     }
 
-    // @DeleteMapping("{id}")
-    // @ResponseStatus(HttpStatus.NO_CONTENT)
-    // public void deleteAddress(@PathVariable Long id) {
-    //     addressService.delete(id);
-    // }
-
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
         Address address = addressService.findById(id);
@@ -96,17 +80,6 @@ public class AddressController {
         addressService.delete(id);
         return ResponseEntity.ok("Address deleted");
     }
-
-    // @PutMapping("{id}")
-    // public Address updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
-    //     Address address = addressService.findById(id);
-    //     address.setCity(addressDTO.getCity());
-    //     address.setNumber(addressDTO.getNumber());
-    //     address.setState(addressDTO.getState());
-    //     address.setStreet(addressDTO.getStreet());
-    //     address.setUser(userService.findById(addressDTO.getUser_id()));
-    //     return addressService.save(address);
-    // }
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {

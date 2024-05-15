@@ -13,6 +13,7 @@ public interface PurchaseService {
   Purchase save( PurchaseDTO purchaseDTO );
   Optional<Purchase> findById( Long id );
   List<Purchase> findPurchasesByUser( User user );
+  List<Purchase> findAll();
   void updateStatus( Long id, PurchaseStatus status );
   void delete( Long id );
 

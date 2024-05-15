@@ -86,6 +86,11 @@ public class PurchaseServiceImpl implements PurchaseService{
     purchaseRepository.deleteById(id);
   }
 
+  @Override
+  public List<Purchase> findAll() {
+    return purchaseRepository.findAll();
+  }
+
 }
 
 
