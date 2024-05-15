@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /* Body da requisição:
 {
   "user_id": 1,
-  "status": "approved",
+  "status": "APPROVED",
   "items": [
     {
       "product_id": 1,
