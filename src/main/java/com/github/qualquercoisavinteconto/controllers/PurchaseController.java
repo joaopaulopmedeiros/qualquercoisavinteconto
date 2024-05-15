@@ -22,6 +22,7 @@ import com.github.qualquercoisavinteconto.services.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -51,7 +52,7 @@ public class PurchaseController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<?> getPurchaseById(@RequestParam Long id) {
+  public ResponseEntity<?> getPurchaseById(@PathVariable Long id) {
     Optional<Purchase> purchase = purchaseService.findById(id);
     if(purchase.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
@@ -60,7 +61,7 @@ public class PurchaseController {
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> getPurchasesByUser(@RequestParam Long id) {
+  public ResponseEntity<?> getPurchasesByUser(@PathVariable Long id) {
     List<Purchase> purchases = purchaseService.findPurchasesByUser(userService.findById(id));
     if(purchases.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No purchases found");
@@ -69,7 +70,8 @@ public class PurchaseController {
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<?> deletePurchase(@RequestParam Long id) {
+  public ResponseEntity<?> deletePurchase(@PathVariable Long id) {
+    System.out.println("Deleting purchase with id: " + id);
     Optional<Purchase> purchase = purchaseService.findById(id);
     if(purchase.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
@@ -79,7 +81,7 @@ public class PurchaseController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> updatePurchase(@RequestParam Long id, @RequestBody PurchaseDTO purchaseDTO) {
+  public ResponseEntity<?> updatePurchase(@PathVariable Long id, @RequestBody PurchaseDTO purchaseDTO) {
     Optional<Purchase> purchase = purchaseService.findById(id);
     if(purchase.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
