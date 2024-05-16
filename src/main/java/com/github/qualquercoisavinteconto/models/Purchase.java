@@ -3,6 +3,7 @@ package com.github.qualquercoisavinteconto.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.qualquercoisavinteconto.enums.PurchaseStatus;
 
 import jakarta.persistence.CascadeType;
@@ -39,6 +40,7 @@ public class Purchase {
     @Column
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
