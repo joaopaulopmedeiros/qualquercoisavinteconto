@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
 import com.github.qualquercoisavinteconto.models.Purchase;
@@ -19,11 +20,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PurchaseItemServiceImpl implements PurchaseItemService{
 
-    private ProductService productService;
-    private PurchaseItemRepository purchaseItemRepository;
-    private PurchaseRepository purchaseRepository;
+    private final ProductService productService;
+    private final PurchaseItemRepository purchaseItemRepository;
+    private final PurchaseRepository purchaseRepository;
 
     @Override
+    @Transactional
     public PurchaseItem save(PurchaseItemDTO purchaseItemDTO) {
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProduct_id()));
