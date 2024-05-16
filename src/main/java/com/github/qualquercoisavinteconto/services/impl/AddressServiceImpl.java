@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.models.Address;
-import com.github.qualquercoisavinteconto.repositories.UserRepository;
 import com.github.qualquercoisavinteconto.repositories.AddressRepository;
 import com.github.qualquercoisavinteconto.services.AddressService;
-import com.github.qualquercoisavinteconto.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 

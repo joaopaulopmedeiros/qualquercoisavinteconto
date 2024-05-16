@@ -15,6 +15,7 @@ import com.github.qualquercoisavinteconto.repositories.PurchaseItemRepository;
 import com.github.qualquercoisavinteconto.repositories.PurchaseRepository;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.PurchaseService;
+// import com.github.qualquercoisavinteconto.services.PurchaseItemService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.models.User;
@@ -30,6 +31,7 @@ public class PurchaseServiceImpl implements PurchaseService{
   private final PurchaseItemRepository purchaseItemRepository;
   private final ProductService productService;
   private final UserService userService;
+  // private final PurchaseItemService purchaseItemService;
 
   @Override
   @Transactional
@@ -89,6 +91,34 @@ public class PurchaseServiceImpl implements PurchaseService{
   @Override
   public List<Purchase> findAll() {
     return purchaseRepository.findAll();
+  }
+
+  @Override
+  public Purchase update(PurchaseDTO purchaseDTO, Long id) {
+    Purchase purchase = purchaseRepository.findById(id).orElseThrow();
+    purchase.setStatus(PurchaseStatus.valueOf(purchaseDTO.getStatus()));
+    purchase.setTotal(purchaseDTO.getItems().stream()
+      .mapToDouble(item -> productService.findById(item.getProduct_id()).getPrice() * item.getQuantity())
+      .sum());
+    purchaseRepository.save(purchase);
+
+    List<PurchaseItem> purchaseItems = purchaseItemRepository.findByPurchase(purchase);
+    // List<PurchaseItem> purchaseItems = purchaseItemService.findItemsByPurchaseId(purchase.getId());
+    purchaseItemRepository.deleteAll(purchaseItems);
+
+    purchaseItems = purchaseDTO.getItems().stream()
+      .map(item -> {
+        PurchaseItem purchaseItem = new PurchaseItem();
+        purchaseItem.setPurchase(purchase);
+        purchaseItem.setProduct(productService.findById(item.getProduct_id()));
+        purchaseItem.setQuantity(item.getQuantity());
+        return purchaseItem;
+      })
+      .collect(Collectors.toList());
+
+    purchaseItemRepository.saveAll(purchaseItems);
+
+    return purchase;
   }
 
 }

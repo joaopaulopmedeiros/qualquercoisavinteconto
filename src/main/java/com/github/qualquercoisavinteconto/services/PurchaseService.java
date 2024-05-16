@@ -16,5 +16,6 @@ public interface PurchaseService {
   List<Purchase> findAll();
   void updateStatus( Long id, PurchaseStatus status );
   void delete( Long id );
+  Purchase update( PurchaseDTO purchaseDTO, Long id );
 
 }

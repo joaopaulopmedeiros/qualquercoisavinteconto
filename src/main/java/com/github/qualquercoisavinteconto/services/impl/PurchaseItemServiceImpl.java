@@ -24,12 +24,12 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     private PurchaseRepository purchaseRepository;
 
     @Override
-    public void save(PurchaseItemDTO purchaseItemDTO) {
+    public PurchaseItem save(PurchaseItemDTO purchaseItemDTO) {
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProduct_id()));
         purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
         purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchase_id()).orElse(null));
-        purchaseItemRepository.save(purchaseItem);
+        return purchaseItemRepository.save(purchaseItem);
     }
     @Override
     public void delete(Long id) {
@@ -37,14 +37,15 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     }
 
     @Override
-    public void update(PurchaseItemDTO purchaseItemDTO, Long id) {
+    public PurchaseItem update(PurchaseItemDTO purchaseItemDTO, Long id) {
         PurchaseItem purchaseItem = purchaseItemRepository.findById(id).orElse(null);
         if (purchaseItem != null) {
             purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProduct_id()));
             purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
             purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchase_id()).orElse(null));
-            purchaseItemRepository.save(purchaseItem);
+            return purchaseItemRepository.save(purchaseItem);
         }
+        return null;
     }
 
     @Override
@@ -57,11 +58,17 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
         }
     }
 
-    @Override
-    public List<PurchaseItem> findItemsByPurchase(Purchase purchase) {
-        List<PurchaseItem> purchaseItems = purchase.getPurchaseItems();
-        return purchaseItems;
-    }
+    // @Override
+    // public List<PurchaseItem> findItemsByPurchase(Purchase purchase) {
+    //     List<PurchaseItem> purchaseItems = purchase.getPurchaseItems();
+    //     return purchaseItems;
+    // }
+
+    // @Override
+    // public List<PurchaseItem> findItemsByPurchase(Purchase purchase) {
+    //     List<PurchaseItem> purchaseItems = purchaseItemRepository.findByPurchase(purchase);
+    //     return purchaseItems;
+    // }
 
     @Override
     public List<PurchaseItem> findItemsByPurchaseId(Long purchaseId) {
@@ -75,5 +82,10 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     @Override
     public Optional<PurchaseItem> findById(Long id) {
         return purchaseItemRepository.findById(id);
+    }
+
+    @Override
+    public List<PurchaseItem> findAll() {
+        return purchaseItemRepository.findAll();
     }
 }

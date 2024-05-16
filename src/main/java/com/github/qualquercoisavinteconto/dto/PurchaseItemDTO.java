@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 /* Body da requisição:
 {
+  "purchase_id": 1,
   "product_id": 1,
   "quantity": 2
 }
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseItemDTO {
 
-  private Long Purchase_id;
+  private Long purchase_id;
   private Long product_id;
   private Integer quantity;
   

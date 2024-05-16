@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseDTO;
 import com.github.qualquercoisavinteconto.models.Purchase;
+import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.services.PurchaseService;
 import com.github.qualquercoisavinteconto.services.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -62,7 +62,11 @@ public class PurchaseController {
 
   @GetMapping("/user/{id}")
   public ResponseEntity<?> getPurchasesByUser(@PathVariable Long id) {
-    List<Purchase> purchases = purchaseService.findPurchasesByUser(userService.findById(id));
+    User user = userService.findById(id);
+    if(user == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+    List<Purchase> purchases = purchaseService.findPurchasesByUser(user);
     if(purchases.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No purchases found");
     }
@@ -71,7 +75,6 @@ public class PurchaseController {
 
   @DeleteMapping("{id}")
   public ResponseEntity<?> deletePurchase(@PathVariable Long id) {
-    System.out.println("Deleting purchase with id: " + id);
     Optional<Purchase> purchase = purchaseService.findById(id);
     if(purchase.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
@@ -86,7 +89,7 @@ public class PurchaseController {
     if(purchase.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
     }
-    return ResponseEntity.ok(purchaseService.save(purchaseDTO));
+    return ResponseEntity.ok(purchaseService.update(purchaseDTO, id));
   }
   
 }
