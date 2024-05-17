@@ -2,9 +2,16 @@ package com.github.qualquercoisavinteconto.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,6 +49,47 @@ public class ReviewController {
         review.setUser_id(reviewDTO.getUser_id());
         review.setProduct_id(reviewDTO.getProduct_id());
         return reviewService.save(review);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getReviewById(@PathVariable Long id) {
+        Review review = reviewService.findById(id);
+        if(review == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
+        }
+        return ResponseEntity.ok(review);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getReviewByUser(@PathVariable Long id) {
+        List<Review> reviews = reviewService.findByUserId(id);
+        if(reviews.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+        }
+        return ResponseEntity.ok(reviews);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleterEVIEW(@PathVariable Long id) {
+        Review review = reviewService.findById(id);
+        if(review == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
+        }
+        reviewService.delete(id);
+        return ResponseEntity.ok("Review deleted");
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) {
+        Review review = reviewService.findById(id);
+        if(review == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
+        }
+        review.setDescription(reviewDTO.getDescription());
+        review.setStars(reviewDTO.getStars());
+        review.setUser(userService.findById(reviewDTO.getUser_id()));
+        review.setProduct(productService.findById(reviewDTO.getProduct_id()));
+        return ResponseEntity.ok(reviewService.save(reviewDTO));
     }
 
 }
