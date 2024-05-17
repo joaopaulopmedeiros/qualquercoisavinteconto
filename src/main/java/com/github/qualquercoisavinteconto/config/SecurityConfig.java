@@ -33,10 +33,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signin", "/signup").permitAll()
-                        .requestMatchers("/products", "/products/**").hasRole("SELLER")
-                        .requestMatchers(HttpMethod.GET, "/products", "/products/**").hasAnyRole("CUSTOMER")
-                        .requestMatchers("/address", "/address/**", "/purchase", "/purchase/**", "/review", "/review/**", "/purchaseitem", "/purchaseitem/**").hasAnyRole("CUSTOMER")
-                        .requestMatchers("/ads", "/ads/**").hasAnyRole("ADVERTISER")
+                        .requestMatchers("/products", "/products/**").hasAnyRole("ADMIN", "SELLER")
+                        .requestMatchers(HttpMethod.GET, "/products", "/products/**").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers("/address", "/address/**", "/purchase", "/purchase/**", "/review", "/review/**", "/purchaseitem", "/purchaseitem/**").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers("/ads", "/ads/**").hasAnyRole("ADMIN","ADVERTISER")
                         .anyRequest().hasRole("ADMIN"))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
