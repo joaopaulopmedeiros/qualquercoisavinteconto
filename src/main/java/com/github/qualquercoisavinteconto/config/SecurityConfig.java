@@ -33,23 +33,30 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signup").permitAll()
+                        
                         .requestMatchers("/categories").hasAnyRole("ADMIN")
                         .requestMatchers("/categories/**").hasAnyRole("ADMIN")
-                        // .requestMatchers("/products/**").hasAnyRole("ADMIN", "SELLER")
-                        // .requestMatchers("/address/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        // .requestMatchers("/ads/**").hasAnyRole("ADMIN", "ADVERTISER")
-                        // .requestMatchers("/purchase/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        // .requestMatchers("/purchaseitem/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        // .requestMatchers("/review/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        // .requestMatchers("/roles/**").hasRole("ADMIN")
-                        .requestMatchers("/categories/**").permitAll()
-                        .requestMatchers("/products/**").permitAll()
-                        .requestMatchers("/address/**").permitAll()
-                        .requestMatchers("/ads/**").permitAll()
-                        .requestMatchers("/purchase/**").permitAll()
-                        .requestMatchers("/purchaseitem/**").permitAll()
-                        .requestMatchers("/review/**").permitAll()
-                        .requestMatchers("/roles/**").permitAll()
+                        
+                        .requestMatchers("/products").hasAnyRole("ADMIN", "SELLER")
+                        .requestMatchers("/products/**").hasAnyRole("ADMIN", "SELLER")
+
+                        .requestMatchers("/address").hasAnyRole("ADMIN", "CUSTOMER")
+                        .requestMatchers("/address/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                        .requestMatchers("/ads").hasAnyRole("ADMIN", "ADVERTISER")
+                        .requestMatchers("/ads/**").hasAnyRole("ADMIN", "ADVERTISER")
+
+                        .requestMatchers("/purchase").hasAnyRole("ADMIN", "CUSTOMER")                        
+                        .requestMatchers("/purchase/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                        .requestMatchers("/purchaseitem").hasAnyRole("ADMIN", "CUSTOMER")
+                        .requestMatchers("/purchaseitem/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                        .requestMatchers("/review").hasAnyRole("ADMIN", "CUSTOMER")                        
+                        .requestMatchers("/review/**").hasAnyRole("ADMIN", "CUSTOMER")
+
+                        .requestMatchers("/roles").hasRole("ADMIN")                        
+                        .requestMatchers("/roles/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
