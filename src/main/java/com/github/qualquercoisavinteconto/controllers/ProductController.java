@@ -2,6 +2,7 @@ package com.github.qualquercoisavinteconto.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
@@ -35,8 +36,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductSearchResponse> search(ProductSearchRequest request) {
-        return this.service.search(request);
+    public ResponseEntity<List<ProductSearchResponse>> search(ProductSearchRequest request) {
+        var result = this.service.search(request);
+        if (result == null || result.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("{id}")
@@ -53,12 +56,13 @@ public class ProductController {
     }
 
     @PutMapping("{id}")
-    public void update(@PathVariable Long id, @RequestBody ProductRequest productDTO) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ProductRequest productDTO) throws ResourceNotFoundException {
         this.service.update(id, productDTO);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ResourceNotFoundException {
         this.service.delete(id);
         return ResponseEntity.noContent().build();
     }

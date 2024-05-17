@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.mappers.ProductMapper;
 import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.models.Product;
@@ -44,9 +45,9 @@ public class ProductService {
     }
 
     @Transactional
-    public Product update(Long id, ProductRequest productRequest) {
+    public Product update(Long id, ProductRequest productRequest) throws ResourceNotFoundException {
         Product product = productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("not found"));
+            .orElseThrow(ResourceNotFoundException::new);
 
         product.setName(productRequest.getName());
         product.setPrice(productRequest.getPrice());
@@ -57,9 +58,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws ResourceNotFoundException {
         Product product = this.productRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("not found"));
+            .orElseThrow(ResourceNotFoundException::new);
 
         productRepository.delete(product);
     }
