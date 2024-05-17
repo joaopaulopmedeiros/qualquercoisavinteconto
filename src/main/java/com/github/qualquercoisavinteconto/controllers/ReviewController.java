@@ -36,11 +36,11 @@ public class ReviewController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Review save(@RequestBody ReviewDTO reviewDTO) {
-        Review review = new Review();
+        ReviewDTO review = new ReviewDTO();
         review.setDescription(reviewDTO.getDescription());
         review.setStars(reviewDTO.getStars());
-        review.setUser(userService.findById(reviewDTO.getUser_id()));
-        review.setProduct(productService.findById(reviewDTO.getProduct_id()));
+        review.setUser_id(reviewDTO.getUser_id());
+        review.setProduct_id(reviewDTO.getProduct_id());
         return reviewService.save(review);
     }
 
