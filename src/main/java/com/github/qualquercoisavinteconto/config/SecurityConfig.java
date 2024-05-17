@@ -1,6 +1,5 @@
 package com.github.qualquercoisavinteconto.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,11 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import com.github.qualquercoisavinteconto.services.impl.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Autowired
     SecurityFilter securityFilter;
 
@@ -32,16 +33,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signin", "/signup").permitAll()
-                        .requestMatchers("/categories", "/categories/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/products").hasAnyRole("ADMIN", "SELLER")
-                        .requestMatchers("/products/**").hasAnyRole("ADMIN", "SELLER")
-                        .requestMatchers("/address", "/address/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/ads", "/ads/**").hasAnyRole("ADMIN", "ADVERTISER")
-                        .requestMatchers("/purchase", "/purchase/**").hasAnyRole("ADMIN", "CUSTOMER")                        
-                        .requestMatchers("/purchaseitem", "/purchaseitem/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/review", "/review/**").hasAnyRole("ADMIN", "CUSTOMER")                        
-                        .requestMatchers("/roles", "/roles/**").hasRole("ADMIN")                        
-                        .anyRequest().authenticated())
+                        .requestMatchers("/products", "/products/**").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.GET, "/products", "/products/**").hasAnyRole("CUSTOMER")
+                        .requestMatchers("/address", "/address/**", "/purchase", "/purchase/**", "/review", "/review/**", "/purchaseitem", "/purchaseitem/**").hasAnyRole("CUSTOMER")
+                        .requestMatchers("/ads", "/ads/**").hasAnyRole("ADVERTISER")
+                        .anyRequest().hasRole("ADMIN"))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
