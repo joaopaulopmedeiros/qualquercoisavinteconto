@@ -32,7 +32,6 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
         purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));
         purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
         purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchaseId()).orElse(null));
-        // return purchaseItemRepository.save(purchaseItem);
         purchaseItemRepository.save(purchaseItem);
         // recalcular total de purchase
         Purchase purchase = purchaseItem.getPurchase();
@@ -51,13 +50,11 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     }
 
     @Override
-    public PurchaseItem update(PurchaseItemDTOwithPurchaseId purchaseItemDTO, Long id) {
+    public PurchaseItem update(PurchaseItemDTO purchaseItemDTO, Long id) {
         PurchaseItem purchaseItem = purchaseItemRepository.findById(id).orElse(null);
         if (purchaseItem != null) {
             purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));
             purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
-            purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchaseId()).orElse(null));
-            // return purchaseItemRepository.save(purchaseItem);
             purchaseItemRepository.save(purchaseItem);
             // recalcular total de purchase
             Purchase purchase = purchaseItem.getPurchase();
@@ -81,18 +78,6 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
             }
         }
     }
-
-    // @Override
-    // public List<PurchaseItem> findItemsByPurchase(Purchase purchase) {
-    //     List<PurchaseItem> purchaseItems = purchase.getPurchaseItems();
-    //     return purchaseItems;
-    // }
-
-    // @Override
-    // public List<PurchaseItem> findItemsByPurchase(Purchase purchase) {
-    //     List<PurchaseItem> purchaseItems = purchaseItemRepository.findByPurchase(purchase);
-    //     return purchaseItems;
-    // }
 
     @Override
     public List<PurchaseItem> findItemsByPurchaseId(Long purchaseId) {

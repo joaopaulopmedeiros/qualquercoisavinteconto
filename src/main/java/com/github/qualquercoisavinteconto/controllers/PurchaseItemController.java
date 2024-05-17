@@ -93,7 +93,7 @@ public class PurchaseItemController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTOwithPurchaseId purchaseItemDTO) {
+  public ResponseEntity<?> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTO purchaseItemDTO) {
     Optional<PurchaseItem> purchaseItem = purchaseItemService.findById(id);
     if(purchaseItem.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase item not found");
