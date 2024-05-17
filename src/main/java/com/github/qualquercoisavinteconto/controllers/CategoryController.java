@@ -6,7 +6,7 @@ import com.github.qualquercoisavinteconto.dto.CategoryDTO;
 import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.services.CategoryService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
