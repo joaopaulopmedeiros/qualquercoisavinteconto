@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.mappers.ProductMapper;
@@ -45,7 +47,7 @@ public class ProductService {
     public Product update(Long id, ProductRequest productRequest) {
         Product product = productRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("not found"));
-            
+
         product.setName(productRequest.getName());
         product.setPrice(productRequest.getPrice());
 
@@ -56,7 +58,10 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        Product product = this.productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("not found"));
+
+        productRepository.delete(product);
     }
 
     @Transactional

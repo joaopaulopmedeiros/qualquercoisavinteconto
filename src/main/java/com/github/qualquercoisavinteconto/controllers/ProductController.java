@@ -59,13 +59,8 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        System.out.println("Deleting product with id: " + id);
-        Product product = this.service.findById(id);
-        if (product == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.service.delete(id);
-        return ResponseEntity.ok("Product deleted");
+        return ResponseEntity.noContent().build();
     }
 }
