@@ -1,24 +1,21 @@
 package com.github.qualquercoisavinteconto.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-/* Body da requisição:
-{
-  "purchase_id": 1,
-  "product_id": 1,
-  "quantity": 2
-}
-*/
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseItemDTO {
+  @JsonProperty("purchase_id")
+  private Long purchaseId;
 
-  private Long purchase_id;
-  private Long product_id;
+  @JsonProperty("product_id")  
+  private Long productId;
+
   private Integer quantity;
   
 }

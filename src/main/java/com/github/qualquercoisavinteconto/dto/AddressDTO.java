@@ -1,25 +1,19 @@
 package com.github.qualquercoisavinteconto.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/* Body da requisição:
-{
-  "user_id": 1,
-  "street": "Rua de teste",
-  "number": "123",
-  "state": "SP",
-  "city": "São Paulo"
-}
- */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressDTO {
 
-    private Long user_id;
+    @JsonProperty("user_id")
+    private Long userId;
     private String street;
     private String number;
     private String state;

@@ -25,8 +25,8 @@ public class ReviewServiceImpl implements ReviewService{
 
   @Override
   public Review save(ReviewDTO reviewDTO) {
-    Product product = productService.findById(reviewDTO.getProduct_id());
-    User user = userService.findById(reviewDTO.getUser_id());
+    Product product = productService.findById(reviewDTO.getProductId());
+    User user = userService.findById(reviewDTO.getUserId());
     Review review = new Review();
     review.setDescription(reviewDTO.getDescription());
     review.setStars(reviewDTO.getStars());
@@ -47,12 +47,12 @@ public class ReviewServiceImpl implements ReviewService{
 
   @Override
   public List<Review> findByProductId(Long id) {
-    return reviewRepository.findByProduct_id(id);
+    return reviewRepository.findByProductId(id);
   }
 
   @Override
   public List<Review> findByUserId(Long id) {
-    return reviewRepository.findByUser_id(id);
+    return reviewRepository.findByUserId(id);
   }
 
   @Override

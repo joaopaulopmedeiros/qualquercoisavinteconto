@@ -36,11 +36,11 @@ public class PurchaseServiceImpl implements PurchaseService{
   @Override
   @Transactional
   public Purchase save(PurchaseDTO purchaseDTO) {
-    Long user_id = purchaseDTO.getUser_id();
+    Long user_id = purchaseDTO.getUserId();
     User user = userService.findById(user_id);
     
     Double total = purchaseDTO.getItems().stream()
-      .mapToDouble(item -> productService.findById(item.getProduct_id()).getPrice() * item.getQuantity())
+      .mapToDouble(item -> productService.findById(item.getProductId()).getPrice() * item.getQuantity())
       .sum();
 
     Purchase purchase = new Purchase();
@@ -55,7 +55,7 @@ public class PurchaseServiceImpl implements PurchaseService{
       .map(item -> {
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setPurchase(purchase);
-        purchaseItem.setProduct(productService.findById(item.getProduct_id()));
+        purchaseItem.setProduct(productService.findById(item.getProductId()));
         purchaseItem.setQuantity(item.getQuantity());
         return purchaseItem;
       })
@@ -98,7 +98,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     Purchase purchase = purchaseRepository.findById(id).orElseThrow();
     purchase.setStatus(PurchaseStatus.valueOf(purchaseDTO.getStatus()));
     purchase.setTotal(purchaseDTO.getItems().stream()
-      .mapToDouble(item -> productService.findById(item.getProduct_id()).getPrice() * item.getQuantity())
+      .mapToDouble(item -> productService.findById(item.getProductId()).getPrice() * item.getQuantity())
       .sum());
     purchaseRepository.save(purchase);
 
@@ -110,7 +110,7 @@ public class PurchaseServiceImpl implements PurchaseService{
       .map(item -> {
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setPurchase(purchase);
-        purchaseItem.setProduct(productService.findById(item.getProduct_id()));
+        purchaseItem.setProduct(productService.findById(item.getProductId()));
         purchaseItem.setQuantity(item.getQuantity());
         return purchaseItem;
       })

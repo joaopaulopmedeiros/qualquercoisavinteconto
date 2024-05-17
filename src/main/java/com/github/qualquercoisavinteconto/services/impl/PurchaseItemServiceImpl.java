@@ -28,9 +28,9 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     @Transactional
     public PurchaseItem save(PurchaseItemDTO purchaseItemDTO) {
         PurchaseItem purchaseItem = new PurchaseItem();
-        purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProduct_id()));
+        purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));
         purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
-        purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchase_id()).orElse(null));
+        purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchaseId()).orElse(null));
         return purchaseItemRepository.save(purchaseItem);
     }
     @Override
@@ -42,9 +42,9 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     public PurchaseItem update(PurchaseItemDTO purchaseItemDTO, Long id) {
         PurchaseItem purchaseItem = purchaseItemRepository.findById(id).orElse(null);
         if (purchaseItem != null) {
-            purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProduct_id()));
+            purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));
             purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
-            purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchase_id()).orElse(null));
+            purchaseItem.setPurchase(purchaseRepository.findById(purchaseItemDTO.getPurchaseId()).orElse(null));
             return purchaseItemRepository.save(purchaseItem);
         }
         return null;

@@ -26,17 +26,13 @@ import org.springframework.http.ResponseEntity;
 @Tag(name = "Address")
 @RequestMapping("/address")
 public class AddressController {
-    // private final ProductService service;
+    private final UserService userService;
+    private final AddressService addressService;
 
-    // public AddressController(ProductService service) {
-    //     this.service = service;
-    // }
-
-    @Autowired
-    AddressService addressService;
-
-    @Autowired
-    UserService userService;
+    public AddressController(UserService userService, AddressService addressService) {
+        this.userService = userService;
+        this.addressService = addressService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,7 +42,7 @@ public class AddressController {
         address.setNumber(addressDTO.getNumber());
         address.setState(addressDTO.getState());
         address.setStreet(addressDTO.getStreet());
-        address.setUser(userService.findById(addressDTO.getUser_id()));
+        address.setUser(userService.findById(addressDTO.getUserId()));
         return addressService.save(address);
     }
 
@@ -88,7 +84,7 @@ public class AddressController {
         address.setNumber(addressDTO.getNumber());
         address.setState(addressDTO.getState());
         address.setStreet(addressDTO.getStreet());
-        address.setUser(userService.findById(addressDTO.getUser_id()));
+        address.setUser(userService.findById(addressDTO.getUserId()));
         return ResponseEntity.ok(addressService.save(address));
     }
     

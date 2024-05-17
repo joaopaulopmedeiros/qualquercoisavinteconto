@@ -5,9 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.github.qualquercoisavinteconto.mappers.ProductMapper;
 import com.github.qualquercoisavinteconto.mappers.UserMapper;
-import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.UserRepository;
 import com.github.qualquercoisavinteconto.responses.UserSearchResponse;

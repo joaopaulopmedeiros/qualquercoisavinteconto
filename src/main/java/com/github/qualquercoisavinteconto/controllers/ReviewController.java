@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;
-import com.github.qualquercoisavinteconto.models.Address;
 import com.github.qualquercoisavinteconto.models.Review;
-import com.github.qualquercoisavinteconto.dto.AddressDTO;
 import com.github.qualquercoisavinteconto.dto.ReviewDTO;
 
 @RestController
@@ -46,8 +44,8 @@ public class ReviewController {
         ReviewDTO review = new ReviewDTO();
         review.setDescription(reviewDTO.getDescription());
         review.setStars(reviewDTO.getStars());
-        review.setUser_id(reviewDTO.getUser_id());
-        review.setProduct_id(reviewDTO.getProduct_id());
+        review.setUserId(reviewDTO.getUserId());
+        review.setProductId(reviewDTO.getProductId());
         return reviewService.save(review);
     }
 
@@ -87,8 +85,8 @@ public class ReviewController {
         }
         review.setDescription(reviewDTO.getDescription());
         review.setStars(reviewDTO.getStars());
-        review.setUser(userService.findById(reviewDTO.getUser_id()));
-        review.setProduct(productService.findById(reviewDTO.getProduct_id()));
+        review.setUser(userService.findById(reviewDTO.getUserId()));
+        review.setProduct(productService.findById(reviewDTO.getProductId()));
         return ResponseEntity.ok(reviewService.save(reviewDTO));
     }
 
