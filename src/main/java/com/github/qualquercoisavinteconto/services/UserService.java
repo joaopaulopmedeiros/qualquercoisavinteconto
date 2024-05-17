@@ -3,14 +3,13 @@ package com.github.qualquercoisavinteconto.services;
 import java.util.List;
 
 import com.github.qualquercoisavinteconto.models.User;
+import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 
 public interface UserService {
 
   User save(User user);
   User findById(Long id);
-  User findByEmail(String email);
-  List<User> findByName(String name);
-  List<User> findAll();
+  List<UserSearchResponse> findAll();
   void delete(Long id);
   
 }

@@ -1,11 +1,16 @@
 package com.github.qualquercoisavinteconto.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.mappers.ProductMapper;
+import com.github.qualquercoisavinteconto.mappers.UserMapper;
+import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.UserRepository;
+import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 import com.github.qualquercoisavinteconto.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,30 +21,19 @@ public class UserServiceImpl implements UserService{
   
   private final UserRepository userRepository;
 
-  @Override
-  public User save(User user) {
-    return userRepository.save(user);
+  public List<UserSearchResponse> findAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+            .map(UserMapper::mapToSearchResponse)
+            .collect(Collectors.toList());
   }
 
-  @Override
   public User findById(Long id) {
     return userRepository.findById(id).orElse(null);
-  }
+  }  
 
-  @Override
-  public User findByEmail(String email) {
-    return userRepository.findByEmail(email).orElse(null);
-  }
-
-  // Recupera os usuários cujo nome contenha a string passada como parâmetro
-  @Override
-  public List<User> findByName(String name) {
-    return userRepository.findByNameContainingIgnoreCase(name);
-  }
-
-  @Override
-  public List<User> findAll() {
-    return userRepository.findAll();
+  public User save(User user) {
+    return userRepository.save(user);
   }
 
   @Override
