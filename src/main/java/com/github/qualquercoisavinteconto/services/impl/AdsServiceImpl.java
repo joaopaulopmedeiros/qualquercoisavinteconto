@@ -23,7 +23,7 @@ public class AdsServiceImpl implements AdsService{
   @Override
   public Ads save(AdsDTO adsDTO) {
     Ads ads = new Ads();
-    Product product = productService.findById(adsDTO.getProduct_id());
+    Product product = productService.findById(adsDTO.getProductId());
     ads.setProduct(product);
     ads.setDescription(adsDTO.getDescription());
     return adsRepository.save(ads);
