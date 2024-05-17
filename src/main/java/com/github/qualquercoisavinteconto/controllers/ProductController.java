@@ -2,8 +2,8 @@ package com.github.qualquercoisavinteconto.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.ProductDTO;
 import com.github.qualquercoisavinteconto.models.Product;
+import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
 import com.github.qualquercoisavinteconto.responses.ProductSearchResponse;
 import com.github.qualquercoisavinteconto.services.ProductService;
@@ -28,8 +28,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Tag(name = "Products")
 @RequestMapping("/products")
 public class ProductController {
-    @Autowired
-    ProductService service;
+    private final ProductService service;
+
+    public ProductController(ProductService service)
+    {
+        this.service = service;
+    }
 
     @GetMapping
     public List<ProductSearchResponse> search(ProductSearchRequest request) {
@@ -37,21 +41,20 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public Product findById(@PathVariable Long id) {
-        return this.service.findById(id);
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        var result = this.service.findById(id);
+        if (result == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(result);  
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Product save(@RequestBody ProductDTO product) {
-        Product newProduct = new Product();
-        newProduct.setName(product.getName());
-        newProduct.setPrice(product.getPrice());
-        return this.service.save(newProduct);
+    public Product save(@RequestBody ProductRequest product) {
+        return this.service.save(product);
     }
 
     @PutMapping("{id}")
-    public void update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    public void update(@PathVariable Long id, @RequestBody ProductRequest productDTO) {
         this.service.update(id, productDTO);
     }
 

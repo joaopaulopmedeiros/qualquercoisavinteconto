@@ -5,47 +5,61 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.github.qualquercoisavinteconto.dto.ProductDTO;
 import com.github.qualquercoisavinteconto.mappers.ProductMapper;
+import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.models.Product;
+import com.github.qualquercoisavinteconto.repositories.CategoryRepository;
 import com.github.qualquercoisavinteconto.repositories.ProductRepository;
+import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
 import com.github.qualquercoisavinteconto.responses.ProductSearchResponse;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductService {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public Product findById(Long id){
-        return repository.findById(id).orElse(null);
-    }
-
-    public ProductService(ProductRepository repository)
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository)
     {
-        this.repository = repository;
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<ProductSearchResponse> search(ProductSearchRequest request) 
     {
-        List<Product> products = repository.findAll();
+        List<Product> products = productRepository.findAll();
         return products.stream()
             .map(ProductMapper::mapToSearchResponse)
             .collect(Collectors.toList());
     }
 
-    public Product save(Product product) {
-        return repository.save(product);
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElse(null);
     }
 
-    public void update(Long id, ProductDTO productDTO) {
-        Product product = repository.findById(id).orElseThrow();
+    public void update(Long id, ProductRequest productDTO) {
+        Product product = productRepository.findById(id).orElseThrow();
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
-        repository.save(product);
+        productRepository.save(product);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Product save(ProductRequest productRequest) {
+        Product product = new Product();
+        product.setName(productRequest.getName());
+        product.setPrice(productRequest.getPrice());
+
+        List<Category> categories = categoryRepository.findAllById(productRequest.getCategories());
+        product.setCategories(categories);
+
+        return productRepository.save(product);
     }
 }
