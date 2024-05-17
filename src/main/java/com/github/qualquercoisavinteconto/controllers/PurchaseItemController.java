@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
+import com.github.qualquercoisavinteconto.dto.PurchaseItemDTOwithPurchaseId;
 import com.github.qualquercoisavinteconto.models.Purchase;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.services.PurchaseItemService;
@@ -36,7 +37,7 @@ public class PurchaseItemController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public PurchaseItem save(@RequestBody PurchaseItemDTO purchaseItemDTO) {
+  public PurchaseItem save(@RequestBody PurchaseItemDTOwithPurchaseId purchaseItemDTO) {
     return purchaseItemService.save(purchaseItemDTO);
   }
 
@@ -92,7 +93,7 @@ public class PurchaseItemController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTO purchaseItemDTO) {
+  public ResponseEntity<?> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTOwithPurchaseId purchaseItemDTO) {
     Optional<PurchaseItem> purchaseItem = purchaseItemService.findById(id);
     if(purchaseItem.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase item not found");

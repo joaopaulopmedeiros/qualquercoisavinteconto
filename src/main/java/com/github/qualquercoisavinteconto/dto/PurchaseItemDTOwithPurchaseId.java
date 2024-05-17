@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseItemDTO {
-  // @JsonProperty("purchase_id")
-  // private Long purchaseId;
+public class PurchaseItemDTOwithPurchaseId {
+  @JsonProperty("purchase_id")
+  private Long purchaseId;
 
   @JsonProperty("product_id")  
   private Long productId;
