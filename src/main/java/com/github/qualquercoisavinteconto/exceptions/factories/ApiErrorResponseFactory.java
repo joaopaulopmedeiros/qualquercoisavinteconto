@@ -6,7 +6,7 @@ import com.github.qualquercoisavinteconto.responses.ApiError;
 import com.github.qualquercoisavinteconto.responses.ApiErrorResponse;
 
 public class ApiErrorResponseFactory {
-    public static ApiErrorResponse createValidationFailedResponse(String code, String message) {
+    public static ApiErrorResponse createApiErrorResponse(String code, String message) {
         var error = ApiError.builder()
                 .code(code)
                 .message(message)
