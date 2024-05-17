@@ -3,9 +3,6 @@ package com.github.qualquercoisavinteconto.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.models.User;
-import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
-import com.github.qualquercoisavinteconto.responses.ProductSearchResponse;
 import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 import com.github.qualquercoisavinteconto.services.UserService;
 
@@ -15,7 +12,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
