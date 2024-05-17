@@ -1,6 +1,7 @@
 package com.github.qualquercoisavinteconto.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -40,11 +41,18 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public void update(Long id, ProductRequest productDTO) {
-        Product product = productRepository.findById(id).orElseThrow();
-        product.setName(productDTO.getName());
-        product.setPrice(productDTO.getPrice());
-        productRepository.save(product);
+    @Transactional
+    public Product update(Long id, ProductRequest productRequest) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("not found"));
+            
+        product.setName(productRequest.getName());
+        product.setPrice(productRequest.getPrice());
+
+        List<Category> categories = categoryRepository.findAllById(productRequest.getCategories());
+        product.setCategories(categories);
+
+        return productRepository.save(product);
     }
 
     public void delete(Long id) {
