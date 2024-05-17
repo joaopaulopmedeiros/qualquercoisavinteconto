@@ -2,6 +2,7 @@ package com.github.qualquercoisavinteconto.services;
 
 import java.util.List;
 
+import com.github.qualquercoisavinteconto.dto.CategoryDTO;
 import com.github.qualquercoisavinteconto.models.Category;
 
 public interface CategoryService {
@@ -11,5 +12,6 @@ public interface CategoryService {
   List<Category> findByName(String name);
   List<Category> findAll();
   void delete(Long id);
+  void update(Long id, CategoryDTO categoryDTO);
   
 }
