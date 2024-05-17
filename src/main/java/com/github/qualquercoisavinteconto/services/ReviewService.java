@@ -7,7 +7,7 @@ import com.github.qualquercoisavinteconto.models.Review;
 
 public interface ReviewService {
   
-  Review save(ReviewDTO reviewDTO);
+  Review save(Review reviewDTO);
   Review findById(Long id);
   List<Review> findAll();
   List<Review> findByProductId(Long id);
