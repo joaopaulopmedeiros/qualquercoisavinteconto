@@ -30,6 +30,7 @@ import com.github.qualquercoisavinteconto.services.impl.AdsServiceImpl;
 @RequestMapping("ads")
 public class AdsController {
 
+    
     @Autowired
     AdsServiceImpl adsService;
 
