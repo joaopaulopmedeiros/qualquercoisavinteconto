@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdsServiceImpl implements AdsService{
   
+  
   private final AdsRepository adsRepository;
   private final ProductService productService;
 

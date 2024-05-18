@@ -13,5 +13,6 @@ public interface AdsService {
   Ads findByProductId(Long id);
   void delete(Long id);
   Ads update(Long id, AdsDTO adsDTO);
+  
 
 }
