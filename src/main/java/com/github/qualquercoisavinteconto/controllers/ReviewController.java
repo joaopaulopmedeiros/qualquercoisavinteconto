@@ -21,7 +21,9 @@ import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.models.Review;
+import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.dto.ReviewDTO;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 @RestController
 @Tag(name = "Review")
@@ -78,16 +80,9 @@ public class ReviewController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateReview(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) {
-        Review review = reviewService.findById(id);
-        if(review == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
-        }
-        review.setDescription(reviewDTO.getDescription());
-        review.setStars(reviewDTO.getStars());
-        review.setUser(userService.findById(reviewDTO.getUserId()));
-        review.setProduct(productService.findById(reviewDTO.getProductId()));
-        return ResponseEntity.ok(reviewService.save(reviewDTO));
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
+        reviewService.update(id, reviewDTO);
+        return ResponseEntity.noContent().build();
     }
 
 }

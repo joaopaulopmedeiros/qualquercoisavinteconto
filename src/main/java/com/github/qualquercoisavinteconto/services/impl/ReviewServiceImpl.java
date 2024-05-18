@@ -5,14 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.dto.ReviewDTO;
+import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.Review;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.ReviewRepository;
+import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -58,6 +61,23 @@ public class ReviewServiceImpl implements ReviewService{
   @Override
   public void delete(Long id) {
     reviewRepository.deleteById(id);
+  }
+
+  @Transactional
+  public Review update(Long id, ReviewDTO reviewDTO) {
+      Review review = reviewRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("Review not found"));
+
+      review.setDescription(reviewDTO.getDescription());
+      review.setStars(reviewDTO.getStars());
+      
+      Product product = productService.findById(reviewDTO.getProductId());
+      review.setProduct(product);
+
+      User user = userService.findById(reviewDTO.getUserId());
+      review.setUser(user);
+
+      return reviewRepository.save(review);
   }
 
 }
