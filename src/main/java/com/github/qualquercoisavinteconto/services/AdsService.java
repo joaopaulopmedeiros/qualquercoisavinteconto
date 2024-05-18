@@ -12,5 +12,6 @@ public interface AdsService {
   List<Ads> findAll();
   Ads findByProductId(Long id);
   void delete(Long id);
+  Ads update(Long id, AdsDTO adsDTO);
 
 }
