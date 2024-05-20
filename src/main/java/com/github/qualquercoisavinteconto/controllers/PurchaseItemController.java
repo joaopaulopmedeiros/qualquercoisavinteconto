@@ -3,9 +3,7 @@ package com.github.qualquercoisavinteconto.controllers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTOwithPurchaseId;
-import com.github.qualquercoisavinteconto.models.Purchase;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.services.PurchaseItemService;
-import com.github.qualquercoisavinteconto.services.PurchaseService;
 
 @RestController
 @Tag(name = "PurchaseItem")
@@ -31,11 +28,9 @@ import com.github.qualquercoisavinteconto.services.PurchaseService;
 public class PurchaseItemController {
 
   private PurchaseItemService purchaseItemService;
-  private PurchaseService purchaseService;
 
-  public PurchaseItemController(PurchaseItemService purchaseItemService, PurchaseService purchaseService) {
+  public PurchaseItemController(PurchaseItemService purchaseItemService) {
     this.purchaseItemService = purchaseItemService;
-    this.purchaseService = purchaseService;
   }
 
   @PostMapping
@@ -45,63 +40,47 @@ public class PurchaseItemController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getPurchaseItems() {
+  public ResponseEntity<List<PurchaseItem>> getPurchaseItems() {
     List<PurchaseItem> purchaseItems = purchaseItemService.findAll();
+
     if(purchaseItems.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No purchase items found");
+      return ResponseEntity.noContent().build();
     }
+
     return ResponseEntity.ok(purchaseItems);
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<?> getPurchaseItemById(@PathVariable Long id) {
-    Optional<PurchaseItem> purchaseItem = purchaseItemService.findById(id);
-    if(purchaseItem.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase item not found");
-    }
-    return ResponseEntity.ok(purchaseItem);
+  public ResponseEntity<PurchaseItem> getPurchaseItemById(@PathVariable Long id) throws ResourceNotFoundException {
+    return ResponseEntity.ok(purchaseItemService.findById(id));
   }
 
   @GetMapping("/purchase/{id}")
-  public ResponseEntity<?> getPurchaseItemsByPurchaseId(@PathVariable Long id) {
-    Optional<Purchase> purchase = purchaseService.findById(id);
-    if(purchase.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
-    }
+  public ResponseEntity<List<PurchaseItem>> getPurchaseItemsByPurchaseId(@PathVariable Long id) throws ResourceNotFoundException {
+
     List<PurchaseItem> purchaseItems = purchaseItemService.findItemsByPurchaseId(id);
+    
     if(purchaseItems.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No purchase items found for this purchase");
+      return ResponseEntity.noContent().build();
     }
+
     return ResponseEntity.ok(purchaseItems);
   }
 
   @DeleteMapping("{id}")
   public ResponseEntity<?> deletePurchaseItem(@PathVariable Long id) {
-    Optional<PurchaseItem> purchaseItem = purchaseItemService.findById(id);
-    if(purchaseItem.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase item not found");
-    }
     purchaseItemService.delete(id);
-    return ResponseEntity.ok("Purchase item deleted");
+    return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/purchase/{id}")
-  public ResponseEntity<?> deletePurchaseItemsByPurchaseId(@PathVariable Long id) {
-    Optional<Purchase> purchase = purchaseService.findById(id);
-    if(purchase.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
-    }
+  public ResponseEntity<Void> deletePurchaseItemsByPurchaseId(@PathVariable Long id) {
     purchaseItemService.deleteAllByPurchaseId(id);
-    return ResponseEntity.ok("Purchase items deleted");
+    return ResponseEntity.noContent().build();
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTO purchaseItemDTO) {
-    Optional<PurchaseItem> purchaseItem = purchaseItemService.findById(id);
-    if(purchaseItem.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase item not found");
-    }
+  public ResponseEntity<PurchaseItem> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTO purchaseItemDTO) {
     return ResponseEntity.ok(purchaseItemService.update(purchaseItemDTO, id));
-  }
-    
+  } 
 }

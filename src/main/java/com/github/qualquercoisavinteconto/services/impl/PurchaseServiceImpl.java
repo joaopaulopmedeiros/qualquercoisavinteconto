@@ -3,7 +3,6 @@ package com.github.qualquercoisavinteconto.services.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +14,11 @@ import com.github.qualquercoisavinteconto.repositories.PurchaseItemRepository;
 import com.github.qualquercoisavinteconto.repositories.PurchaseRepository;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.PurchaseService;
-// import com.github.qualquercoisavinteconto.services.PurchaseItemService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.enums.PurchaseStatus;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,11 +30,10 @@ public class PurchaseServiceImpl implements PurchaseService{
   private final PurchaseItemRepository purchaseItemRepository;
   private final ProductService productService;
   private final UserService userService;
-  // private final PurchaseItemService purchaseItemService;
 
   @Override
   @Transactional
-  public Purchase save(PurchaseDTO purchaseDTO) {
+  public Purchase save(PurchaseDTO purchaseDTO) throws ResourceNotFoundException {
     Long user_id = purchaseDTO.getUserId();
     User user = userService.findById(user_id);
     
@@ -67,8 +65,8 @@ public class PurchaseServiceImpl implements PurchaseService{
   }
 
   @Override
-  public Optional<Purchase> findById(Long id) {
-    return purchaseRepository.findById(id);
+  public Purchase findById(Long id) throws ResourceNotFoundException {
+    return purchaseRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override

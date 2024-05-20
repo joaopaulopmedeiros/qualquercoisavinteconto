@@ -37,12 +37,8 @@ public class AdsController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getAdsById(@PathVariable Long id) {
-        Ads ads = adsService.findById(id);
-        if(ads == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ads not found");
-        }
-        return ResponseEntity.ok(ads);
+    public ResponseEntity<Ads> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(adsService.findById(id));
     }
 
     @PutMapping("{id}")
@@ -52,13 +48,8 @@ public class AdsController {
     }
     
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteAds(@PathVariable Long id) {
-        Ads ads = adsService.findById(id);
-        if(ads == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ads not found");
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         adsService.delete(id);
-        return ResponseEntity.ok("Ads deleted");
+        return ResponseEntity.noContent().build();
     }
-
 }

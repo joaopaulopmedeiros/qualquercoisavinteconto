@@ -3,7 +3,6 @@ package com.github.qualquercoisavinteconto.controllers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseDTO;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Purchase;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.services.PurchaseService;
@@ -41,7 +41,7 @@ public class PurchaseController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Purchase save(@RequestBody PurchaseDTO purchaseDTO) {
+  public Purchase save(@RequestBody PurchaseDTO purchaseDTO) throws ResourceNotFoundException {
     return purchaseService.save(purchaseDTO);
   }
 
@@ -55,16 +55,12 @@ public class PurchaseController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<?> getPurchaseById(@PathVariable Long id) {
-    Optional<Purchase> purchase = purchaseService.findById(id);
-    if(purchase.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
-    }
-    return ResponseEntity.status(HttpStatus.OK).body(purchase);
+  public ResponseEntity<Purchase> getPurchaseById(@PathVariable Long id) throws ResourceNotFoundException {
+    return ResponseEntity.ok(purchaseService.findById(id));
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> getPurchasesByUser(@PathVariable Long id) {
+  public ResponseEntity<?> getPurchasesByUser(@PathVariable Long id) throws ResourceNotFoundException {
     User user = userService.findById(id);
     if(user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -77,22 +73,13 @@ public class PurchaseController {
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<?> deletePurchase(@PathVariable Long id) {
-    Optional<Purchase> purchase = purchaseService.findById(id);
-    if(purchase.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
-    }
+  public ResponseEntity<Void> deletePurchase(@PathVariable Long id) {
     purchaseService.delete(id);
-    return ResponseEntity.status(HttpStatus.OK).body("Purchase deleted");
+    return ResponseEntity.noContent().build();
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<?> updatePurchase(@PathVariable Long id, @RequestBody PurchaseDTO purchaseDTO) {
-    Optional<Purchase> purchase = purchaseService.findById(id);
-    if(purchase.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Purchase not found");
-    }
+  public ResponseEntity<Purchase> updatePurchase(@PathVariable Long id, @RequestBody PurchaseDTO purchaseDTO) {
     return ResponseEntity.ok(purchaseService.update(purchaseDTO, id));
   }
-  
 }

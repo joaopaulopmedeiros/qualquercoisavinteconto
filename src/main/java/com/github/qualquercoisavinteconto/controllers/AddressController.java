@@ -11,6 +11,7 @@ import com.github.qualquercoisavinteconto.services.AddressService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.models.Address;
 import com.github.qualquercoisavinteconto.dto.AddressDTO;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class AddressController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Address save(@RequestBody AddressDTO addressDTO) {
+    public Address save(@RequestBody AddressDTO addressDTO) throws ResourceNotFoundException {
         Address address = new Address();
         address.setCity(addressDTO.getCity());
         address.setNumber(addressDTO.getNumber());
@@ -46,39 +47,28 @@ public class AddressController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getAddressById(@PathVariable Long id) {
-        Address address = addressService.findById(id);
-        if(address == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
-        }
-        return ResponseEntity.ok(address);
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(addressService.findById(id));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getAddressByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<Address>> getAddressByUser(@PathVariable Long userId) throws ResourceNotFoundException {
         List<Address> addresses = addressService.findAddressesByUser(userService.findById(userId));
-        if(addresses.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
-        }
+ 
+        if(addresses == null || addresses.isEmpty()) return ResponseEntity.noContent().build();
+
         return ResponseEntity.ok(addresses);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
-        Address address = addressService.findById(id);
-        if(address == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
-        }
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) throws ResourceNotFoundException {
         addressService.delete(id);
-        return ResponseEntity.ok("Address deleted");
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) throws ResourceNotFoundException {
         Address address = addressService.findById(id);
-        if(address == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
-        }
         address.setCity(addressDTO.getCity());
         address.setNumber(addressDTO.getNumber());
         address.setState(addressDTO.getState());

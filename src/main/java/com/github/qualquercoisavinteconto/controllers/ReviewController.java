@@ -34,7 +34,7 @@ public class ReviewController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Review save(@RequestBody ReviewDTO reviewDTO) {
+    public Review save(@RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
         ReviewDTO review = new ReviewDTO();
         review.setDescription(reviewDTO.getDescription());
         review.setStars(reviewDTO.getStars());
@@ -44,37 +44,29 @@ public class ReviewController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getReviewById(@PathVariable Long id) {
+    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
         Review review = reviewService.findById(id);
-        if(review == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
-        }
         return ResponseEntity.ok(review);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> getReviewByUser(@PathVariable Long id) {
+    public ResponseEntity<List<Review>> getListByUserId(@PathVariable Long id) {
         List<Review> reviews = reviewService.findByUserId(id);
         if(reviews.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(reviews);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleterEVIEW(@PathVariable Long id) {
-        Review review = reviewService.findById(id);
-        if(review == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         reviewService.delete(id);
-        return ResponseEntity.ok("Review deleted");
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
-        reviewService.update(id, reviewDTO);
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Review> update(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
+        var review = reviewService.update(id, reviewDTO);
+        return ResponseEntity.ok(review);
+    }
 }

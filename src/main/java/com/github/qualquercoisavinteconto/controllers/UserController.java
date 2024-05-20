@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
+    public ResponseEntity<User> findById(@PathVariable Long id) throws ResourceNotFoundException {
         var result = service.findById(id);
         if (result == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(result);  

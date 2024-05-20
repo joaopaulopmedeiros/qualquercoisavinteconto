@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.mappers.UserMapper;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.UserRepository;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService{
             .collect(Collectors.toList());
   }
 
-  public User findById(Long id) {
-    return userRepository.findById(id).orElse(null);
+  public User findById(Long id) throws ResourceNotFoundException {
+    return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
   }  
 
   public User save(User user) {
@@ -35,7 +36,8 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
-  public void delete(Long id) {
-    userRepository.deleteById(id);
+  public void delete(Long id) throws ResourceNotFoundException  {
+    User user = this.findById(id);
+    userRepository.delete(user);
   }
 }

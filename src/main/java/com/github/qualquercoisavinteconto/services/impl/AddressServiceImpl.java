@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.models.User;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Address;
 import com.github.qualquercoisavinteconto.repositories.AddressRepository;
 import com.github.qualquercoisavinteconto.services.AddressService;
@@ -25,9 +26,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address findById(Long id)
+    public Address findById(Long id) throws ResourceNotFoundException
     {
-        return addressRepository.findById(id).orElse(null);
+        return addressRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -37,9 +38,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void delete(Long id)
+    public void delete(Long id) throws ResourceNotFoundException
     {
-        addressRepository.deleteById(id);
+        Address address = this.findById(id);
+        addressRepository.delete(address);
     }
-    
+
 }

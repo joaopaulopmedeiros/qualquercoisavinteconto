@@ -1,13 +1,13 @@
 package com.github.qualquercoisavinteconto.services.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
 import com.github.qualquercoisavinteconto.dto.PurchaseItemDTOwithPurchaseId;
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Purchase;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.repositories.PurchaseItemRepository;
@@ -85,12 +85,12 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
         if (purchase != null) {
             return purchase.getPurchaseItems();
         }
-        return null;
+        return List.of();
     }
 
     @Override
-    public Optional<PurchaseItem> findById(Long id) {
-        return purchaseItemRepository.findById(id);
+    public PurchaseItem findById(Long id) throws ResourceNotFoundException {
+        return purchaseItemRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
