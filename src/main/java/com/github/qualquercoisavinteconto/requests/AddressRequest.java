@@ -1,4 +1,4 @@
-package com.github.qualquercoisavinteconto.dto;
+package com.github.qualquercoisavinteconto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDTO {
+public class AddressRequest {
 
     @JsonProperty("user_id")
     private Long userId;

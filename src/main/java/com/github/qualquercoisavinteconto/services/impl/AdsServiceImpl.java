@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.github.qualquercoisavinteconto.dto.AdsDTO;
 import com.github.qualquercoisavinteconto.models.Ads;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.repositories.AdsRepository;
+import com.github.qualquercoisavinteconto.requests.AdsRequest;
 import com.github.qualquercoisavinteconto.services.AdsService;
 import com.github.qualquercoisavinteconto.services.ProductService;
 
@@ -23,7 +23,7 @@ public class AdsServiceImpl implements AdsService{
   private final ProductService productService;
 
   @Override
-  public Ads save(AdsDTO adsDTO) {
+  public Ads save(AdsRequest adsDTO) {
     Ads ads = new Ads();
     Product product = productService.findById(adsDTO.getProductId());
     ads.setProduct(product);
@@ -52,7 +52,7 @@ public class AdsServiceImpl implements AdsService{
   }
 
   @Transactional
-  public Ads update(Long id, AdsDTO adsDTO) {
+  public Ads update(Long id, AdsRequest adsDTO) {
     Ads ads = adsRepository.findById(id)
       .orElseThrow(() -> new RuntimeException("Ads not found"));
 

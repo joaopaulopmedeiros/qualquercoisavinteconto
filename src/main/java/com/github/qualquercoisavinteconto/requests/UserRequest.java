@@ -1,4 +1,4 @@
-package com.github.qualquercoisavinteconto.dto;
+package com.github.qualquercoisavinteconto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import com.github.qualquercoisavinteconto.models.Role;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserRequest {
     private String name;
     private String email;
     private List<Role> roles;

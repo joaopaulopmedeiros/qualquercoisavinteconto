@@ -7,11 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.github.qualquercoisavinteconto.dto.PurchaseDTO;
 import com.github.qualquercoisavinteconto.models.Purchase;
 import com.github.qualquercoisavinteconto.repositories.PurchaseItemRepository;
 import com.github.qualquercoisavinteconto.repositories.PurchaseRepository;
+import com.github.qualquercoisavinteconto.requests.PurchaseRequest;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.PurchaseService;
 import com.github.qualquercoisavinteconto.services.UserService;
@@ -33,9 +32,10 @@ public class PurchaseServiceImpl implements PurchaseService{
 
   @Override
   @Transactional
-  public Purchase save(PurchaseDTO purchaseDTO) throws ResourceNotFoundException {
-    Long user_id = purchaseDTO.getUserId();
-    User user = userService.findById(user_id);
+  public Purchase save(PurchaseRequest purchaseDTO) throws ResourceNotFoundException {
+    Long userId = purchaseDTO.getUserId();
+
+    User user = userService.findById(userId);
     
     Double total = purchaseDTO.getItems().stream()
       .mapToDouble(item -> productService.findById(item.getProductId()).getPrice() * item.getQuantity())
@@ -92,7 +92,7 @@ public class PurchaseServiceImpl implements PurchaseService{
   }
 
   @Override
-  public Purchase update(PurchaseDTO purchaseDTO, Long id) {
+  public Purchase update(PurchaseRequest purchaseDTO, Long id) {
     Purchase purchase = purchaseRepository.findById(id).orElseThrow();
     purchase.setStatus(PurchaseStatus.valueOf(purchaseDTO.getStatus()));
     purchase.setTotal(purchaseDTO.getItems().stream()

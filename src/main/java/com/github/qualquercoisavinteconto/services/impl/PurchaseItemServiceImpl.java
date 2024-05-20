@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
-import com.github.qualquercoisavinteconto.dto.PurchaseItemDTOwithPurchaseId;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Purchase;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
 import com.github.qualquercoisavinteconto.repositories.PurchaseItemRepository;
 import com.github.qualquercoisavinteconto.repositories.PurchaseRepository;
+import com.github.qualquercoisavinteconto.requests.PurchaseItemWithPurchaseIdRequest;
+import com.github.qualquercoisavinteconto.requests.PurchaseItemRequest;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.PurchaseItemService;
 
@@ -27,7 +27,7 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
 
     @Override
     @Transactional
-    public PurchaseItem save(PurchaseItemDTOwithPurchaseId purchaseItemDTO) {
+    public PurchaseItem save(PurchaseItemWithPurchaseIdRequest purchaseItemDTO) {
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));
         purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
@@ -50,7 +50,7 @@ public class PurchaseItemServiceImpl implements PurchaseItemService{
     }
 
     @Override
-    public PurchaseItem update(PurchaseItemDTO purchaseItemDTO, Long id) {
+    public PurchaseItem update(PurchaseItemRequest purchaseItemDTO, Long id) {
         PurchaseItem purchaseItem = purchaseItemRepository.findById(id).orElse(null);
         if (purchaseItem != null) {
             purchaseItem.setProduct(productService.findById(purchaseItemDTO.getProductId()));

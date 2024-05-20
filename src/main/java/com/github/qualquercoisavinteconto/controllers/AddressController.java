@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.qualquercoisavinteconto.services.AddressService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.models.Address;
-import com.github.qualquercoisavinteconto.dto.AddressDTO;
+import com.github.qualquercoisavinteconto.requests.AddressRequest;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +36,7 @@ public class AddressController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Address save(@RequestBody AddressDTO addressDTO) throws ResourceNotFoundException {
+    public Address save(@RequestBody AddressRequest addressDTO) throws ResourceNotFoundException {
         Address address = new Address();
         address.setCity(addressDTO.getCity());
         address.setNumber(addressDTO.getNumber());
@@ -67,7 +67,7 @@ public class AddressController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) throws ResourceNotFoundException {
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody AddressRequest addressDTO) throws ResourceNotFoundException {
         Address address = addressService.findById(id);
         address.setCity(addressDTO.getCity());
         address.setNumber(addressDTO.getNumber());

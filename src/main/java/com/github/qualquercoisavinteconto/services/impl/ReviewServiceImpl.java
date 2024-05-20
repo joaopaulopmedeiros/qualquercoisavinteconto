@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.github.qualquercoisavinteconto.dto.ReviewDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.Review;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.ReviewRepository;
+import com.github.qualquercoisavinteconto.requests.ReviewRequest;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;
@@ -26,7 +26,7 @@ public class ReviewServiceImpl implements ReviewService{
   private final UserService userService;
 
   @Override
-  public Review save(ReviewDTO reviewDTO) throws ResourceNotFoundException {
+  public Review save(ReviewRequest reviewDTO) throws ResourceNotFoundException {
     Product product = productService.findById(reviewDTO.getProductId());
     User user = userService.findById(reviewDTO.getUserId());
     Review review = new Review();
@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService{
   }
 
   @Transactional
-  public Review update(Long id, ReviewDTO reviewDTO) throws ResourceNotFoundException {
+  public Review update(Long id, ReviewRequest reviewDTO) throws ResourceNotFoundException {
       Review review = reviewRepository.findById(id)
       .orElseThrow(() -> new RuntimeException("Review not found"));
 

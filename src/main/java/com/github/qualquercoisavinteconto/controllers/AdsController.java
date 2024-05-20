@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.AdsDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Ads;
+import com.github.qualquercoisavinteconto.requests.AdsRequest;
 import com.github.qualquercoisavinteconto.services.impl.AdsServiceImpl;
 
 @RestController
@@ -32,7 +32,7 @@ public class AdsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Ads save(@RequestBody AdsDTO adsDTO) {
+    public Ads save(@RequestBody AdsRequest adsDTO) {
         return adsService.save(adsDTO);
     }
 
@@ -42,8 +42,8 @@ public class AdsController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AdsDTO adsDTO) throws ResourceNotFoundException {
-        adsService.update(id, adsDTO);
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AdsRequest ads) throws ResourceNotFoundException {
+        adsService.update(id, ads);
         return ResponseEntity.noContent().build();
     }
     

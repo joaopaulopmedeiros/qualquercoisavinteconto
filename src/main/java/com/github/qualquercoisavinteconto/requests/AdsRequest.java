@@ -1,4 +1,4 @@
-package com.github.qualquercoisavinteconto.dto;
+package com.github.qualquercoisavinteconto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AdsDTO {
+public class AdsRequest {
     private String description;
     @JsonProperty("product_id")
     private Long productId;    

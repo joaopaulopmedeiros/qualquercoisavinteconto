@@ -3,9 +3,9 @@ package com.github.qualquercoisavinteconto.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.UserDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.User;
+import com.github.qualquercoisavinteconto.requests.UserRequest;
 import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 import com.github.qualquercoisavinteconto.services.UserService;
 
@@ -52,7 +52,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User save(@RequestBody UserDTO userDTO) {
+    public User save(@RequestBody UserRequest userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserDTO userDTO) throws ResourceNotFoundException {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserRequest userDTO) throws ResourceNotFoundException {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.PurchaseItemDTO;
-import com.github.qualquercoisavinteconto.dto.PurchaseItemDTOwithPurchaseId;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.PurchaseItem;
+import com.github.qualquercoisavinteconto.requests.PurchaseItemWithPurchaseIdRequest;
+import com.github.qualquercoisavinteconto.requests.PurchaseItemRequest;
 import com.github.qualquercoisavinteconto.services.PurchaseItemService;
 
 @RestController
@@ -35,7 +35,7 @@ public class PurchaseItemController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public PurchaseItem save(@RequestBody PurchaseItemDTOwithPurchaseId purchaseItemDTO) {
+  public PurchaseItem save(@RequestBody PurchaseItemWithPurchaseIdRequest purchaseItemDTO) {
     return purchaseItemService.save(purchaseItemDTO);
   }
 
@@ -80,7 +80,7 @@ public class PurchaseItemController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<PurchaseItem> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemDTO purchaseItemDTO) {
+  public ResponseEntity<PurchaseItem> updatePurchaseItem(@PathVariable Long id, @RequestBody PurchaseItemRequest purchaseItemDTO) {
     return ResponseEntity.ok(purchaseItemService.update(purchaseItemDTO, id));
   } 
 }

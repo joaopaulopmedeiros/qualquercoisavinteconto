@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.github.qualquercoisavinteconto.dto.CategoryDTO;
 import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.repositories.CategoryRepository;
+import com.github.qualquercoisavinteconto.requests.CategoryRequest;
 import com.github.qualquercoisavinteconto.services.CategoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void update(Long id, CategoryDTO categoryDTO){
+    public void update(Long id, CategoryRequest categoryDTO){
         Category category = categoryRepository.findById(id).orElseThrow();
         category.setName(categoryDTO.getName());
         categoryRepository.save(category);

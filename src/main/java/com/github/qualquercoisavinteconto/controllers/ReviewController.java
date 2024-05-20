@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.services.impl.ReviewServiceImpl;
 import com.github.qualquercoisavinteconto.models.Review;
-import com.github.qualquercoisavinteconto.dto.ReviewDTO;
+import com.github.qualquercoisavinteconto.requests.ReviewRequest;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 @RestController
@@ -34,8 +34,8 @@ public class ReviewController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Review save(@RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
-        ReviewDTO review = new ReviewDTO();
+    public Review save(@RequestBody ReviewRequest reviewDTO) throws ResourceNotFoundException {
+        ReviewRequest review = new ReviewRequest();
         review.setDescription(reviewDTO.getDescription());
         review.setStars(reviewDTO.getStars());
         review.setUserId(reviewDTO.getUserId());
@@ -65,7 +65,7 @@ public class ReviewController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Review> update(@PathVariable Long id, @RequestBody ReviewDTO reviewDTO) throws ResourceNotFoundException {
+    public ResponseEntity<Review> update(@PathVariable Long id, @RequestBody ReviewRequest reviewDTO) throws ResourceNotFoundException {
         var review = reviewService.update(id, reviewDTO);
         return ResponseEntity.ok(review);
     }

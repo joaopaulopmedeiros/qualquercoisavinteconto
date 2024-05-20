@@ -2,8 +2,8 @@ package com.github.qualquercoisavinteconto.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.CategoryDTO;
 import com.github.qualquercoisavinteconto.models.Category;
+import com.github.qualquercoisavinteconto.requests.CategoryRequest;
 import com.github.qualquercoisavinteconto.services.CategoryService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,14 +44,14 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Category save(@RequestBody CategoryDTO category) {
+    public Category save(@RequestBody CategoryRequest category) {
         Category newCategory = new Category();
         newCategory.setName(category.getName());
         return this.service.save(newCategory);
     }
     
     @PutMapping("{id}")
-    public void update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+    public void update(@PathVariable Long id, @RequestBody CategoryRequest categoryDTO) {
         this.service.update(id, categoryDTO);
     }
 
