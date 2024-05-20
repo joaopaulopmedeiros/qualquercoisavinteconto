@@ -2,15 +2,11 @@ package com.github.qualquercoisavinteconto.services.impl;
 
 import java.util.List;
 
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.dto.AdsDTO;
-import com.github.qualquercoisavinteconto.dto.ReviewDTO;
 import com.github.qualquercoisavinteconto.models.Ads;
 import com.github.qualquercoisavinteconto.models.Product;
-import com.github.qualquercoisavinteconto.models.Review;
-import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.AdsRepository;
 import com.github.qualquercoisavinteconto.services.AdsService;
 import com.github.qualquercoisavinteconto.services.ProductService;

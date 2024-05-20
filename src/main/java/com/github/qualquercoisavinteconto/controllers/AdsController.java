@@ -16,21 +16,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.dto.AdsDTO;
-import com.github.qualquercoisavinteconto.dto.ReviewDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
-import com.github.qualquercoisavinteconto.models.Address;
 import com.github.qualquercoisavinteconto.models.Ads;
-import com.github.qualquercoisavinteconto.services.AdsService;
 import com.github.qualquercoisavinteconto.services.impl.AdsServiceImpl;
-
-
 
 @RestController
 @Tag(name = "Ads")
 @RequestMapping("ads")
 public class AdsController {
 
-    
     @Autowired
     AdsServiceImpl adsService;
 

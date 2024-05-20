@@ -3,15 +3,9 @@ package com.github.qualquercoisavinteconto.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.qualquercoisavinteconto.dto.AddressDTO;
 import com.github.qualquercoisavinteconto.dto.UserDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
-import com.github.qualquercoisavinteconto.models.Address;
-import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.User;
-import com.github.qualquercoisavinteconto.requests.ProductRequest;
-import com.github.qualquercoisavinteconto.requests.ProductSearchRequest;
-import com.github.qualquercoisavinteconto.responses.ProductSearchResponse;
 import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 import com.github.qualquercoisavinteconto.services.UserService;
 
@@ -27,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 

@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.dto.ReviewDTO;
-import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.models.Review;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.ReviewRepository;
-import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.services.ProductService;
 import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;

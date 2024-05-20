@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qualquercoisavinteconto.services.ProductService;
-import com.github.qualquercoisavinteconto.services.ReviewService;
 import com.github.qualquercoisavinteconto.services.UserService;
 import com.github.qualquercoisavinteconto.services.impl.ReviewServiceImpl;
 import com.github.qualquercoisavinteconto.models.Review;
-import com.github.qualquercoisavinteconto.requests.ProductRequest;
 import com.github.qualquercoisavinteconto.dto.ReviewDTO;
 import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
