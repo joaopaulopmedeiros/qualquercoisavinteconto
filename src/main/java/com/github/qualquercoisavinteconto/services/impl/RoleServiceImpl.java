@@ -31,8 +31,8 @@ public class RoleServiceImpl implements RoleService{
   }
 
   @Override
-  public Role findByName(String name) {
-    return roleRepository.findByNameContainingIgnoreCase(name).orElse(null);
+  public Role findByName(String name) throws ResourceNotFoundException {
+    return roleRepository.findByNameContainingIgnoreCase(name).orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
@@ -41,7 +41,15 @@ public class RoleServiceImpl implements RoleService{
   }
 
   @Override
-  public void delete(Long id) {
-    roleRepository.deleteById(id);
+  public void delete(Long id) throws ResourceNotFoundException {
+    Role role = this.findById(id);
+    roleRepository.delete(role);
+  }
+
+  @Override
+  public void update(Long id, RoleStoreRequest request) throws ResourceNotFoundException {
+    Role role = this.findById(id);
+    role.setName(request.getName().toUpperCase());
+    this.roleRepository.save(role);    
   }
 }

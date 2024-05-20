@@ -8,10 +8,10 @@ import com.github.qualquercoisavinteconto.requests.RoleStoreRequest;
 
 public interface RoleService {
 
-  Role save(RoleStoreRequest role);
-  Role findById(Long id) throws ResourceNotFoundException;
-  Role findByName(String name);
   List<Role> findAll();
-  void delete(Long id);
-  
+  Role findById(Long id) throws ResourceNotFoundException;
+  Role findByName(String name) throws ResourceNotFoundException;
+  Role save(RoleStoreRequest role);
+  void delete(Long id) throws ResourceNotFoundException;
+  void update(Long id, RoleStoreRequest request) throws ResourceNotFoundException;
 }
