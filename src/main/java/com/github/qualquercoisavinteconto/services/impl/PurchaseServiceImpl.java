@@ -101,7 +101,6 @@ public class PurchaseServiceImpl implements PurchaseService{
     purchaseRepository.save(purchase);
 
     List<PurchaseItem> purchaseItems = purchaseItemRepository.findByPurchase(purchase);
-    // List<PurchaseItem> purchaseItems = purchaseItemService.findItemsByPurchaseId(purchase.getId());
     purchaseItemRepository.deleteAll(purchaseItems);
 
     purchaseItems = purchaseDTO.getItems().stream()
