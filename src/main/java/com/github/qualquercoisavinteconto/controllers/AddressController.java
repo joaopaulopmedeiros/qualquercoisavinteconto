@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @Tag(name = "Address")
-@RequestMapping("/address")
+@RequestMapping("/addresses")
 public class AddressController {
     private final UserService userService;
     private final AddressService addressService;
@@ -54,9 +54,9 @@ public class AddressController {
         return ResponseEntity.ok(address);
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getAddressByUser(@PathVariable Long id) {
-        List<Address> addresses = addressService.findAddressesByUser(userService.findById(id));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getAddressByUser(@PathVariable Long userId) {
+        List<Address> addresses = addressService.findAddressesByUser(userService.findById(userId));
         if(addresses.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
         }
@@ -86,5 +86,4 @@ public class AddressController {
         address.setUser(userService.findById(addressDTO.getUserId()));
         return ResponseEntity.ok(addressService.save(address));
     }
-    
 }

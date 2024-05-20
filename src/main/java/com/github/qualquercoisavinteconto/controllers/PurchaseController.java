@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @Tag(name = "Purchase")
-@RequestMapping("/purchase")
+@RequestMapping("/purchases")
 public class PurchaseController {
 
   @Autowired

@@ -27,7 +27,7 @@ import com.github.qualquercoisavinteconto.services.PurchaseService;
 
 @RestController
 @Tag(name = "PurchaseItem")
-@RequestMapping("/purchaseitem")
+@RequestMapping("/purchases-items")
 public class PurchaseItemController {
 
   @Autowired

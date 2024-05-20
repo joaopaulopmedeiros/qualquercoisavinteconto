@@ -26,7 +26,7 @@ import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 
 @RestController
 @Tag(name = "Review")
-@RequestMapping("review")
+@RequestMapping("reviews")
 public class ReviewController {
     
 
@@ -59,7 +59,7 @@ public class ReviewController {
         return ResponseEntity.ok(review);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<?> getReviewByUser(@PathVariable Long id) {
         List<Review> reviews = reviewService.findByUserId(id);
         if(reviews.isEmpty()) {
