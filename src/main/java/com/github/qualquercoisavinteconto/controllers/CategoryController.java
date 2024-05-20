@@ -2,6 +2,7 @@ package com.github.qualquercoisavinteconto.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.requests.CategoryRequest;
 import com.github.qualquercoisavinteconto.services.CategoryService;
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
-    public Category findById(@PathVariable Long id) {
+    public Category findById(@PathVariable Long id) throws ResourceNotFoundException {
         return this.service.findById(id);
     }
 
@@ -51,12 +52,12 @@ public class CategoryController {
     }
     
     @PutMapping("{id}")
-    public void update(@PathVariable Long id, @RequestBody CategoryRequest categoryDTO) {
+    public void update(@PathVariable Long id, @RequestBody CategoryRequest categoryDTO) throws ResourceNotFoundException {
         this.service.update(id, categoryDTO);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) throws ResourceNotFoundException {
         this.service.delete(id);
     }
 }

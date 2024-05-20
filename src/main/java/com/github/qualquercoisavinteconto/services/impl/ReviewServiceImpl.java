@@ -38,8 +38,8 @@ public class ReviewServiceImpl implements ReviewService{
   }
 
   @Override
-  public Review findById(Long id) {
-    return reviewRepository.findById(id).orElseThrow(() -> new RuntimeException("Review not found"));
+  public Review findById(Long id) throws ResourceNotFoundException {
+    return reviewRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
@@ -58,14 +58,14 @@ public class ReviewServiceImpl implements ReviewService{
   }
 
   @Override
-  public void delete(Long id) {
-    reviewRepository.deleteById(id);
+  public void delete(Long id) throws ResourceNotFoundException {
+    Review review = this.findById(id);
+    reviewRepository.delete(review);
   }
 
   @Transactional
   public Review update(Long id, ReviewRequest reviewDTO) throws ResourceNotFoundException {
-      Review review = reviewRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("Review not found"));
+      Review review = this.findById(id);
 
       review.setDescription(reviewDTO.getDescription());
       review.setStars(reviewDTO.getStars());

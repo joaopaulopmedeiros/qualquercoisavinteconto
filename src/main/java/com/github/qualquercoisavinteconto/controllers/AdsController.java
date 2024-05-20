@@ -37,7 +37,7 @@ public class AdsController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Ads> getById(@PathVariable Long id) {
+    public ResponseEntity<Ads> getById(@PathVariable Long id) throws ResourceNotFoundException {
         return ResponseEntity.ok(adsService.findById(id));
     }
 

@@ -9,11 +9,11 @@ import com.github.qualquercoisavinteconto.requests.ReviewRequest;
 public interface ReviewService {
   
   Review save(ReviewRequest reviewDTO) throws ResourceNotFoundException;
-  Review findById(Long id);
+  Review findById(Long id) throws ResourceNotFoundException;
   List<Review> findAll();
   List<Review> findByProductId(Long id);
   List<Review> findByUserId(Long id);
-  void delete(Long id);
+  void delete(Long id) throws ResourceNotFoundException;
   Review update(Long id, ReviewRequest reviewDTO) throws ResourceNotFoundException;
 
 }

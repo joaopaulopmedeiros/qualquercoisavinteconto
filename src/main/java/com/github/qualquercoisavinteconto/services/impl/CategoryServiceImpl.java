@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Category;
 import com.github.qualquercoisavinteconto.repositories.CategoryRepository;
 import com.github.qualquercoisavinteconto.requests.CategoryRequest;
@@ -23,8 +24,8 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
+    public Category findById(Long id) throws ResourceNotFoundException {
+        return categoryRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -38,15 +39,16 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void delete(Long id) {
-        categoryRepository.deleteById(id);
+    public void delete(Long id) throws ResourceNotFoundException {
+        Category category = this.findById(id);
+        categoryRepository.delete(category);
     }
 
     @Override
-    public void update(Long id, CategoryRequest categoryDTO){
-        Category category = categoryRepository.findById(id).orElseThrow();
+    public void update(Long id, CategoryRequest categoryDTO) throws ResourceNotFoundException{
+        Category category = this.findById(id);
         category.setName(categoryDTO.getName());
         categoryRepository.save(category);
     }
-  
+
 }

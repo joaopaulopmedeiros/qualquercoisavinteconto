@@ -44,7 +44,7 @@ public class ReviewController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
+    public ResponseEntity<Review> getReviewById(@PathVariable Long id) throws ResourceNotFoundException {
         Review review = reviewService.findById(id);
         return ResponseEntity.ok(review);
     }
@@ -59,7 +59,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ResourceNotFoundException {
         reviewService.delete(id);
         return ResponseEntity.noContent().build();
     }

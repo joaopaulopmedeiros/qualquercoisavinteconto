@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qualquercoisavinteconto.exceptions.ResourceNotFoundException;
 import com.github.qualquercoisavinteconto.models.Ads;
 import com.github.qualquercoisavinteconto.models.Product;
 import com.github.qualquercoisavinteconto.repositories.AdsRepository;
@@ -32,8 +33,8 @@ public class AdsServiceImpl implements AdsService{
   }
 
   @Override
-  public Ads findById(Long id) {
-    return adsRepository.findById(id).orElseThrow(() -> new RuntimeException("Ads not found"));
+  public Ads findById(Long id) throws ResourceNotFoundException {
+    return adsRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
@@ -52,16 +53,16 @@ public class AdsServiceImpl implements AdsService{
   }
 
   @Transactional
-  public Ads update(Long id, AdsRequest adsDTO) {
+  public Ads update(Long id, AdsRequest adsDTO) throws ResourceNotFoundException {
     Ads ads = adsRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("Ads not found"));
+      .orElseThrow(ResourceNotFoundException::new);
 
-      ads.setDescription(adsDTO.getDescription());
-      
-      Product product = productService.findById(adsDTO.getProductId());
-      ads.setProduct(product);
+    ads.setDescription(adsDTO.getDescription());
+    
+    Product product = productService.findById(adsDTO.getProductId());
+    ads.setProduct(product);
 
-      return adsRepository.save(ads);
+    return adsRepository.save(ads);
   }
 
 }
