@@ -55,10 +55,10 @@ public class PurchaseItemController {
     return ResponseEntity.ok(purchaseItemService.findById(id));
   }
 
-  @GetMapping("/purchase/{id}")
-  public ResponseEntity<List<PurchaseItem>> getPurchaseItemsByPurchaseId(@PathVariable Long id) throws ResourceNotFoundException {
+  @GetMapping("/purchase/{purchaseId}")
+  public ResponseEntity<List<PurchaseItem>> getPurchaseItemsByPurchaseId(@PathVariable Long purchaseId) throws ResourceNotFoundException {
 
-    List<PurchaseItem> purchaseItems = purchaseItemService.findItemsByPurchaseId(id);
+    List<PurchaseItem> purchaseItems = purchaseItemService.findItemsByPurchaseId(purchaseId);
     
     if(purchaseItems.isEmpty()) {
       return ResponseEntity.noContent().build();
@@ -73,9 +73,9 @@ public class PurchaseItemController {
     return ResponseEntity.noContent().build();
   }
 
-  @DeleteMapping("/purchase/{id}")
-  public ResponseEntity<Void> deletePurchaseItemsByPurchaseId(@PathVariable Long id) {
-    purchaseItemService.deleteAllByPurchaseId(id);
+  @DeleteMapping("/purchase/{purchaseId}")
+  public ResponseEntity<Void> deletePurchaseItemsByPurchaseId(@PathVariable Long purchaseId) {
+    purchaseItemService.deleteAllByPurchaseId(purchaseId);
     return ResponseEntity.noContent().build();
   }
 

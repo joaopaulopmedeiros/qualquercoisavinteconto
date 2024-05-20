@@ -59,9 +59,9 @@ public class PurchaseController {
     return ResponseEntity.ok(purchaseService.findById(id));
   }
 
-  @GetMapping("/user/{id}")
-  public ResponseEntity<?> getPurchasesByUser(@PathVariable Long id) throws ResourceNotFoundException {
-    User user = userService.findById(id);
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<?> getPurchasesByUser(@PathVariable Long userId) throws ResourceNotFoundException {
+    User user = userService.findById(userId);
     if(user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
