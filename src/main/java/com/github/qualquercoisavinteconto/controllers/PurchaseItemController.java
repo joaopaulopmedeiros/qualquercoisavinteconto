@@ -30,10 +30,13 @@ import com.github.qualquercoisavinteconto.services.PurchaseService;
 @RequestMapping("/purchases-items")
 public class PurchaseItemController {
 
-  @Autowired
   private PurchaseItemService purchaseItemService;
-  @Autowired
   private PurchaseService purchaseService;
+
+  public PurchaseItemController(PurchaseItemService purchaseItemService, PurchaseService purchaseService) {
+    this.purchaseItemService = purchaseItemService;
+    this.purchaseService = purchaseService;
+  }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)

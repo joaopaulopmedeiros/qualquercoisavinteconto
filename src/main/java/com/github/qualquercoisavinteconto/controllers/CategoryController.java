@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +24,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Tag(name = "Categories")
 @RequestMapping("/categories")
 public class CategoryController {
-    @Autowired
-    CategoryService service;
+
+    private final CategoryService service;
+
+    public CategoryController(CategoryService service)
+    {
+        this.service = service;
+    }
 
     @GetMapping
     public List<Category> findAll() {
@@ -41,7 +45,6 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Category save(@RequestBody CategoryDTO category) {
-        System.out.println(category.getName());
         Category newCategory = new Category();
         newCategory.setName(category.getName());
         return this.service.save(newCategory);

@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,10 +30,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/purchases")
 public class PurchaseController {
 
-  @Autowired
-  private PurchaseService purchaseService;
-  @Autowired
+  private final PurchaseService purchaseService;
   private UserService userService;
+
+  public PurchaseController(PurchaseService purchaseService, UserService userService)
+  {
+    this.purchaseService = purchaseService;
+    this.userService = userService;
+  }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
