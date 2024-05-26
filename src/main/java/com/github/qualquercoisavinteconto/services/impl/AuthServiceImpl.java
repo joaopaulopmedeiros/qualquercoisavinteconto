@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
                 var token = tokenService.createToken(user);
 
-                var mappedUser = UserMapper.mapToPrincipalUserResponse(user);
+                var mappedUser = UserMapper.mapToIdentity(user);
 
                 return SigninResponse.builder()
                                 .accessToken(token)

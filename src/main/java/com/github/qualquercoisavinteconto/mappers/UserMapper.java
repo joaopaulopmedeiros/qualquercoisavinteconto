@@ -2,7 +2,7 @@ package com.github.qualquercoisavinteconto.mappers;
 
 import com.github.qualquercoisavinteconto.models.Role;
 import com.github.qualquercoisavinteconto.models.User;
-import com.github.qualquercoisavinteconto.responses.PrincipalUserResponse;
+import com.github.qualquercoisavinteconto.responses.UserIdentityResponse;
 import com.github.qualquercoisavinteconto.responses.UserSearchResponse;
 
 public class UserMapper {
@@ -14,8 +14,8 @@ public class UserMapper {
         return response;
     }    
 
-    public static PrincipalUserResponse mapToPrincipalUserResponse(User user) {
-        PrincipalUserResponse response = new PrincipalUserResponse();
+    public static UserIdentityResponse mapToIdentity(User user) {
+        UserIdentityResponse response = new UserIdentityResponse();
         response.setId(user.getId());
         response.setName(user.getName());
         response.setRoles(user.getRoles());

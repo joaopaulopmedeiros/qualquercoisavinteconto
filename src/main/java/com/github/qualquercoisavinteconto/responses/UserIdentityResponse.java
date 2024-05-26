@@ -7,7 +7,7 @@ import com.github.qualquercoisavinteconto.models.Role;
 import lombok.Data;
 
 @Data
-public class PrincipalUserResponse {
+public class UserIdentityResponse {
     private Long id;
     private String name;
     private List<Role> roles;   
