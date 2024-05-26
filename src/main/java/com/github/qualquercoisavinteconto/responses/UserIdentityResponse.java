@@ -10,5 +10,6 @@ import lombok.Data;
 public class UserIdentityResponse {
     private Long id;
     private String name;
+    private String email;
     private List<Role> roles;   
 }

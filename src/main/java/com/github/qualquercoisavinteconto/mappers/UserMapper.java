@@ -18,6 +18,7 @@ public class UserMapper {
         UserIdentityResponse response = new UserIdentityResponse();
         response.setId(user.getId());
         response.setName(user.getName());
+        response.setEmail(user.getEmail());
         response.setRoles(user.getRoles());
         return response;
     }

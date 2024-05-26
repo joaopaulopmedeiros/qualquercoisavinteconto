@@ -75,9 +75,15 @@ public class AuthServiceImpl implements AuthService {
 
                 this.userRepository.save(newUser);
 
+                var token = tokenService.createToken(newUser);
+
+                var mappedUser = UserMapper.mapToIdentity(newUser);
+
                 var response = new SignupResponse();
 
-                response.setId(newUser.getId());
+                response.setAccessToken(token);
+                
+                response.setIdentity(mappedUser);
 
                 return response;
         }
