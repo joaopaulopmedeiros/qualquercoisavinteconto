@@ -13,4 +13,5 @@ import lombok.Setter;
 @Setter
 public class SigninResponse {
     private String accessToken;
+    private PrincipalUserResponse identity;
 }

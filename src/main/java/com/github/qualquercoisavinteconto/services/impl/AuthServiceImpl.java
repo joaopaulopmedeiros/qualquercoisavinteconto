@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.qualquercoisavinteconto.enums.UserRoles;
 import com.github.qualquercoisavinteconto.exceptions.UserAlreadyExistsException;
+import com.github.qualquercoisavinteconto.mappers.UserMapper;
 import com.github.qualquercoisavinteconto.models.Role;
 import com.github.qualquercoisavinteconto.models.User;
 import com.github.qualquercoisavinteconto.repositories.RoleRepository;
@@ -47,10 +48,15 @@ public class AuthServiceImpl implements AuthService {
 
                 var auth = this.authManager.authenticate(usernamePassword);
 
-                var token = tokenService.createToken((User) auth.getPrincipal());
+                var user = (User) auth.getPrincipal();
+
+                var token = tokenService.createToken(user);
+
+                var mappedUser = UserMapper.mapToPrincipalUserResponse(user);
 
                 return SigninResponse.builder()
                                 .accessToken(token)
+                                .identity(mappedUser)
                                 .build();
         }
 
